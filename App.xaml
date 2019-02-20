@@ -1,0 +1,646 @@
+﻿<Application
+    x:Class="Magaza.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Magaza"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--  Resources scoped at the Application level should be defined here.  -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/PresentationFramework.Aero,Version=4.0.0.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35,processorArchitecture=MSIL;component/themes/Aero.NormalColor.xaml" />
+                <ResourceDictionary Source="/Xceed.Wpf.Toolkit;component/Themes/Aero/Brushes_NormalColor.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type local:Resizer}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:Resizer}">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type local:ResizablePanel}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:ResizablePanel}">
+                            <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="5" />
+                                </Grid.RowDefinitions>
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNWSE"
+                                    ThumbDirection="TopLeft" />
+
+                                <local:Resizer
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeWE"
+                                    ThumbDirection="Left" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNESW"
+                                    ThumbDirection="BottomLeft" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNS"
+                                    ThumbDirection="Bottom" />
+
+                                <local:Resizer
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNWSE"
+                                    ThumbDirection="BottomRight" />
+
+                                <local:Resizer
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeWE"
+                                    ThumbDirection="Right" />
+
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Width="3"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNESW"
+                                    ThumbDirection="TopRight" />
+
+                                <local:Resizer
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Height="3"
+                                    Background="DarkBlue"
+                                    Cursor="SizeNS"
+                                    ThumbDirection="Top" />
+
+                                <ContentPresenter
+                                    Content="{TemplateBinding Content}"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="{TemplateBinding Padding}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type ToggleButton}">
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border
+                                x:Name="border"
+                                BorderThickness="1"
+                                CornerRadius="1"
+                                SnapsToDevicePixels="True">
+                                <Border.Background>
+                                    <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop ice:Freeze="True" Offset="1" Color="#FFAFB6B8" />
+                                        <GradientStop ice:Freeze="True" Color="#FFDCE2E3" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop ice:Freeze="True" Offset="1" Color="#FF767C7E" />
+                                        <GradientStop ice:Freeze="True" Color="#FFAFB6B8" />
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <Border
+                                        x:Name="InnerHighlight"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        BorderBrush="#4CFFFFFF"
+                                        BorderThickness="1"
+                                        SnapsToDevicePixels="True">
+                                        <ContentPresenter
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                    <Border
+                                        x:Name="TopHighlight"
+                                        BorderBrush="#66FFFFFF"
+                                        BorderThickness="0,1,0,0"
+                                        SnapsToDevicePixels="True" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="TopHighlight" Property="Opacity" Value="0" />
+                                    <Setter TargetName="InnerHighlight" Property="Opacity" Value="0.3" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF256999" />
+                                                <GradientStop ice:Freeze="True" Color="#FF4FEAC5" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="0" Color="#DED2EEDC" />
+                                                <GradientStop ice:Freeze="True" Offset="0.5" Color="#DE548DB5" />
+                                                <GradientStop ice:Freeze="True" Offset="0.6" Color="#DE1E4F70" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#DE1FD9DF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="0" Color="#FF1CA1E3" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF6AD4FF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="TopHighlight" Property="Opacity" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border
+                                x:Name="border"
+                                BorderThickness="1"
+                                CornerRadius="1"
+                                SnapsToDevicePixels="True">
+                                <Border.Background>
+                                    <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop ice:Freeze="True" Offset="1" Color="#FFAFB6B8" />
+                                        <GradientStop ice:Freeze="True" Color="#FFDCE2E3" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop ice:Freeze="True" Offset="1" Color="#FF767C7E" />
+                                        <GradientStop ice:Freeze="True" Color="#FFAFB6B8" />
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Grid>
+                                    <Border
+                                        x:Name="InnerHighlight"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        BorderBrush="#4CFFFFFF"
+                                        BorderThickness="1"
+                                        SnapsToDevicePixels="True">
+                                        <ContentPresenter
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                    <Border
+                                        x:Name="TopHighlight"
+                                        BorderBrush="#66FFFFFF"
+                                        BorderThickness="0,1,0,0"
+                                        SnapsToDevicePixels="True" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="TopHighlight" Property="Opacity" Value="0" />
+                                    <Setter TargetName="InnerHighlight" Property="Opacity" Value="0.3" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF256999" />
+                                                <GradientStop ice:Freeze="True" Color="#FF4FEAC5" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="0" Color="#DED2EEDC" />
+                                                <GradientStop ice:Freeze="True" Offset="0.5" Color="#DE548DB5" />
+                                                <GradientStop ice:Freeze="True" Offset="0.6" Color="#DE1E4F70" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#DE1FD9DF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="0" Color="#FF1CA1E3" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF6AD4FF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="TopHighlight" Property="Opacity" Value="0" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsDefault" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF068ACC" />
+                                                <GradientStop ice:Freeze="True" Color="#FF34B2F1" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ControlTemplate x:Key="TintedGroupBox" TargetType="{x:Type GroupBox}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="0"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="2,2,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop ice:Freeze="True" Color="White" />
+                                <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter
+                            Margin="4"
+                            ContentSource="Header"
+                            RecognizesAccessKey="True" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        BorderBrush="Black"
+                        BorderThickness="1,0,1,3"
+                        CornerRadius="0,0,2,2">
+                        <Border.Background>
+                            <LinearGradientBrush ice:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop ice:Freeze="True" Offset="1" Color="#FF1B5D8B" />
+                                <GradientStop ice:Freeze="True" Color="#FF48F3CA" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter Margin="4" />
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Border
+                                x:Name="Border"
+                                Margin="2,0"
+                                BorderThickness="1,1,1,0"
+                                CornerRadius="9,9,0,0">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop ice:Freeze="True" Color="White" />
+                                        <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <ContentPresenter
+                                    x:Name="ContentSite"
+                                    Margin="10,2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    ContentSource="Header" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <!--<Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Color="White" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                </Trigger>-->
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background">
+                                        <Setter.Value>
+                                            <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop ice:Freeze="True" Color="White" />
+                                                <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                                            </LinearGradientBrush>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="false">
+                                    <Setter TargetName="Border" Property="Background" Value="{x:Null}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="TextTrimming" Value="WordEllipsis" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <!--<Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource Self},
+                                Path=ActualHeight, Converter={StaticResource FontSizeConverter}}" />-->
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border>
+                                    <AdornedElementPlaceholder x:Name="adorner" />
+                                </Border>
+                                <Canvas
+                                    Width="15.27"
+                                    Height="15.3"
+                                    Margin="0,-7.5,-7.5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    ToolTip="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}">
+                                    <Ellipse
+                                        Canvas.Left="0"
+                                        Canvas.Top="0"
+                                        Width="15.27"
+                                        Height="15.3"
+                                        Fill="#FFFF5000"
+                                        Stretch="Fill"
+                                        Stroke="#FFFF0000"
+                                        StrokeLineJoin="Round" />
+                                    <Rectangle
+                                        Canvas.Left="2.27"
+                                        Canvas.Top="6.17"
+                                        Width="10.87"
+                                        Height="3.25"
+                                        Fill="#FFFFFFFF"
+                                        Stretch="Fill"
+                                        Stroke="#FFFFFFFF"
+                                        StrokeLineJoin="Round" />
+                                </Canvas>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="MediumSeaGreen" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="xctk:CalculatorUpDown">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="xctk:WatermarkTextBox">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="xctk:DateTimePicker">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="xctk:DoubleUpDown">
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Border>
+                                    <AdornedElementPlaceholder x:Name="adorner" />
+                                </Border>
+                                <Canvas
+                                    Width="15.27"
+                                    Height="15.3"
+                                    Margin="0,-7.5,-7.5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    ToolTip="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}">
+                                    <Ellipse
+                                        Canvas.Left="0"
+                                        Canvas.Top="0"
+                                        Width="15.27"
+                                        Height="15.3"
+                                        Fill="#FFFF5000"
+                                        Stretch="Fill"
+                                        Stroke="#FFFF0000"
+                                        StrokeLineJoin="Round" />
+                                    <Rectangle
+                                        Canvas.Left="2.27"
+                                        Canvas.Top="6.17"
+                                        Width="10.87"
+                                        Height="3.25"
+                                        Fill="#FFFFFFFF"
+                                        Stretch="Fill"
+                                        Stroke="#FFFFFFFF"
+                                        StrokeLineJoin="Round" />
+                                </Canvas>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="xctk:IntegerUpDown">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="DatePickerTextBox">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop ice:Freeze="True" Color="White" />
+                            <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ProgressBar">
+                            <Border>
+                                <Grid x:Name="PART_Track">
+                                    <Rectangle
+                                        x:Name="PART_Indicator"
+                                        HorizontalAlignment="Left"
+                                        Fill="#FF00D1FF"
+                                        Opacity="0.1" />
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SatışProgressBarStyle" TargetType="ProgressBar">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ProgressBar">
+                            <Border>
+                                <Grid x:Name="PART_Track">
+                                    <Rectangle x:Name="PART_Indicator" HorizontalAlignment="Left">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Offset="1" Color="#FF1D5666" />
+                                                <GradientStop Color="#FF09B6FF" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DataGridTextBoxUpper" TargetType="{x:Type TextBox}">
+                <Setter Property="CharacterCasing" Value="Upper" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

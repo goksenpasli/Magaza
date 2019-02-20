@@ -1,0 +1,158 @@
+﻿<Window
+    x:Class="Magaza.TaksitDurumu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Magaza"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Taksitler"
+    Width="640"
+    Height="480"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+    </Window.Resources>
+    <Grid>
+        <GroupBox Template="{StaticResource TintedGroupBox}">
+            <GroupBox.DataContext>
+                <local:TaksitDurumları />
+            </GroupBox.DataContext>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Height="16"
+                        Margin="0,3"
+                        Text="KİŞİ BİLGİLERİ" />
+                    <ComboBox x:Name="CbTaksitFilter" Grid.Column="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding ComboTaksitKişiDeğişti}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Musteriler.Adi, StringFormat='\{0\} '}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Musteriler.Soyadi, StringFormat='\{0\} '}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="Blue"
+                                            Text="{Binding Urunler.UrunAdi, StringFormat=' Aldığı Ürün: \{0\}'}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="Green"
+                                            Text="{Binding Musteriler.Telefon, StringFormat=' Telefon: \{0\}'}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="Red"
+                                            Text="{Binding Musteriler.Adres, StringFormat='Adres: \{0\} '}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="ForestGreen"
+                                            Text="{Binding Musteriler.Tc, StringFormat='TC: \{0\} '}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Foreground="DarkViolet"
+                                            Text="{Binding TahsilatTarih, StringFormat='Tahsilat Tarihi: \{0:d\} '}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Grid.Column="2" IsEnabled="{Binding Items.IsEmpty, Converter={StaticResource NegateBooleanConverter}, ElementName=DgTaksitDurumu}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Width="32"
+                                HorizontalAlignment="Center"
+                                Source="icons/6.png" />
+                            <AccessText
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="_SEÇİLİ KİŞİYE&#xA;RAPOR AL" />
+                        </StackPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding TaksitRaporAl}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </GroupBox.Header>
+            <DataGrid
+                x:Name="DgTaksitDurumu"
+                AlternatingRowBackground="NavajoWhite"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                ItemsSource="{Binding Cv}"
+                SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Binding="{Binding Sira, UpdateSourceTrigger=PropertyChanged}"
+                        Header="SIRA"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding VadeTarihi, StringFormat=\{0:d\}, UpdateSourceTrigger=PropertyChanged}"
+                        Header="VADE&#xA;TARİHİ"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding TaksitBedeli, StringFormat=\{0:C\}, UpdateSourceTrigger=PropertyChanged}"
+                        Header="TAKSİT&#xA;BEDELİ"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding TahsilEdilenTaksitTutari, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                        Header="TAHSİL EDİLEN&#xA;TAKSİT TUTARI" />
+                    <DataGridCheckBoxColumn
+                        Binding="{Binding TaksitOdendiMi, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                        Header="TAKSİT&#xA;ÖDENDİ Mİ"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Binding="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                        EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                        Header="AÇIKLAMA" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding Güncelle}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="16"
+                                            HorizontalAlignment="Center"
+                                            ice:Freeze="True"
+                                            Source="icons/update.png" />
+                                        <AccessText
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Text="_GÜNCELLE" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</Window>

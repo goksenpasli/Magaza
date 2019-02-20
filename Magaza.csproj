@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9F68723C-9690-4A71-9B1D-C8D819A69CD0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DefaultClrNameSpace>Magaza</DefaultClrNameSpace>
+    <RootNamespace>Magaza</RootNamespace>
+    <AssemblyName>Magaza</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>Application.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Magaza.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FastReport, Version=2018.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\FastReport\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.SqlCe, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b33a9a06fcc00c4c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\FastReport\Extras\Connections\FastReport.SqlCe\bin\Release\FastReport.SqlCe.dll</HintPath>
+    </Reference>
+    <Reference Include="LogicNP.CryptoLicensing, Version=12.0.0.0, Culture=neutral, PublicKeyToken=4a3c0a4c668b48b4">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\LogicNP Software\CryptoLicensing For .Net 2018\LogicNP.CryptoLicensing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server Compact Edition\v3.5\Private\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="TaskDialog">
+      <HintPath>.\TaskDialog.dll</HintPath>
+    </Reference>
+    <Reference Include="WebEye.Controls.Wpf.WebCameraControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\WebEye.Controls.Wpf.WebCameraControl.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converter.cs" />
+    <Compile Include="DataContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataContext.lqml</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendGlass.cs" />
+    <Compile Include="FaizHesaplama.cs" />
+    <Compile Include="IImageResizing.cs" />
+    <Compile Include="ImageResizing.cs" />
+    <Compile Include="MüsteriResimleri.cs" />
+    <Compile Include="MüşteriArama.cs" />
+    <Compile Include="MüşteriResimSil.cs" />
+    <Compile Include="PopupHızlıSatış.cs" />
+    <Compile Include="Resim.xaml.cs">
+      <DependentUpon>Resim.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SatışArama.cs" />
+    <Compile Include="Hakkında.xaml.cs">
+      <DependentUpon>Hakkında.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HızlıSatışDropDown.cs" />
+    <Compile Include="KategoriGirişi.cs" />
+    <Compile Include="Raporla.cs" />
+    <Compile Include="ResizablePanel.cs" />
+    <Compile Include="Resizer.cs" />
+    <Compile Include="SatışToplamlar.cs" />
+    <Compile Include="SatışListeSil.cs" />
+    <Compile Include="SatışListeEkle.cs" />
+    <Compile Include="MüşteriEkleme.cs" />
+    <Compile Include="MüşteriGüncelleme.cs" />
+    <Compile Include="Sorgular.cs" />
+    <Compile Include="Tahsilat.cs" />
+    <Compile Include="TahsilatDeğişti.cs" />
+    <Compile Include="TahsilatToplamları.cs" />
+    <Compile Include="TaksitButtonFiltreleri.cs" />
+    <Compile Include="TaksitDurumları.cs" />
+    <Compile Include="TaksitDurumu.xaml.cs">
+      <DependentUpon>TaksitDurumu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TaksitGüncelle.cs" />
+    <Compile Include="TaksitRaporAl.cs" />
+    <Compile Include="ToptancıEkle.cs" />
+    <Compile Include="ToptancıGüncelle.cs" />
+    <Compile Include="ToptancılarFiltreleri.cs" />
+    <Compile Include="ToptancıRaporAl.cs" />
+    <Compile Include="UpDownDeğişti.cs" />
+    <Compile Include="VeriKontrol.cs" />
+    <Compile Include="WindowExtensions.cs" />
+    <Compile Include="ÜrünBarkodlarıRaporla.cs" />
+    <Compile Include="ÜrünDeğişti.cs" />
+    <Compile Include="ÜrünEşleştir.cs" />
+    <Compile Include="ÜrünGirişleri.cs" />
+    <Compile Include="ÜrünGüncellemeleri.cs" />
+    <Compile Include="ÜrünFiltreleri.cs" />
+    <Compile Include="ResimKaydet.cs" />
+    <Compile Include="ÜrünResimleri.cs" />
+    <Compile Include="Müşteriİadeler.cs" />
+    <Compile Include="ÜrünResimSil.cs" />
+    <Compile Include="İadeArama.cs" />
+    <Page Include="Hakkında.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resim.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TaksitDurumu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.manifest" />
+    <None Include="Application.ico">
+      <Visible>false</Visible>
+    </None>
+    <None Include="DataContext.Diagram1.view">
+      <DependentUpon>DataContext.lqml</DependentUpon>
+    </None>
+    <None Include="DataContext.edps">
+      <DependentUpon>DataContext.lqml</DependentUpon>
+    </None>
+    <None Include="DataContext.lqml">
+      <Generator>DevartLinqToSqlGenerator</Generator>
+      <LastGenOutput>DataContext.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Rapor\iadeler.frx" />
+    <EmbeddedResource Include="Rapor\müşteriler.frx" />
+    <EmbeddedResource Include="Rapor\taksitödemedurumları.frx" />
+    <EmbeddedResource Include="Rapor\toptancılar.frx" />
+    <EmbeddedResource Include="Rapor\Turkish.frl" />
+    <EmbeddedResource Include="Rapor\taksitkişiödemedurumları.frx" />
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Rapor\barkod.frx" />
+    <EmbeddedResource Include="Rapor\günlüksatıştahsilatgrafik.frx" />
+    <EmbeddedResource Include="Rapor\aylıksatıştahsilatgrafik.frx" />
+    <EmbeddedResource Include="Rapor\yıllıksatıştahsilatgrafik.frx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\shell32_240.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\shell32_16802.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\imageres_5357.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\imageres_177.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\imageres_72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Application.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath32)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

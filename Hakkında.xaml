@@ -1,0 +1,338 @@
+﻿<Window
+    x:Class="Magaza.Hakkında"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Hakkında"
+    Width="368"
+    Height="250"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Storyboard
+            x:Key="Storyboard1"
+            AutoReverse="True"
+            RepeatBehavior="Forever"
+            Timeline.DesiredFrameRate="20">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D0003FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF0003FF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D004AFF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF004AFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path2" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D0092FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF0092FF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path3" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D00DFFF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00DFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path4" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D00FFD7" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00FFD7" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path5" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D00FF8E" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00FF8E" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path6" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D00FF46" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00FF46" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path7" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D03FF00" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF03FF00" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path8" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D4BFF00" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF4BFF00" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path9" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D94FF00" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF94FF00" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path10" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DDCFF00" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFDCFF00" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path11" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFFD900" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFFD900" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path12" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF9100" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF9100" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path13" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF4400" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF4400" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path14" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF0004" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF0004" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path15" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF004D" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF004D" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path16" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF0095" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF0095" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path17" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DFF00DE" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFFF00DE" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path18" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9DD800FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFD800FF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path19" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D8F00FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF8F00FF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path20" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D4700FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF4700FF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="path21" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="#9D0003FF" />
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF0003FF" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource Storyboard1}" />
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid x:Name="LayoutRoot">
+        <Canvas
+            Width="327.89"
+            Height="217.827"
+            MouseLeftButtonDown="Canvas_MouseLeftButtonDown">
+            <Canvas.CacheMode>
+                <BitmapCache EnableClearType="False" SnapsToDevicePixels="False" />
+            </Canvas.CacheMode>
+            <Path
+                x:Name="path"
+                Canvas.Left="117.916"
+                Canvas.Top="180.553"
+                Width="91.5793"
+                Height="37.274"
+                Data="M 117.916,199.989C 125.401,201.011 132.963,202.328 140.568,204.115C 138.706,208.604 136.847,213.17 134.99,217.827C 144.438,213.727 153.963,210.789 163.489,208.836C 172.961,210.767 182.435,213.668 191.835,217.716C 190.09,213.101 188.345,208.566 186.596,204.101C 194.283,202.327 201.929,201.039 209.496,200.062C 199.103,196.436 188.557,193.905 177.965,192.395C 173.277,188.223 168.578,184.304 163.881,180.553C 159.08,184.287 154.278,188.197 149.487,192.371C 138.881,193.864 128.322,196.382 117.916,199.989 Z "
+                Fill="#9D0003FF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path1"
+                Canvas.Left="111.499"
+                Canvas.Top="172.528"
+                Width="104.438"
+                Height="42.9832"
+                Data="M 130.928,215.511C 141.698,210.551 152.582,207.085 163.469,204.853C 174.295,207.059 185.122,210.48 195.839,215.381C 193.851,210.016 191.859,204.765 189.865,199.607C 198.635,197.67 207.346,196.302 215.937,195.243C 204.136,190.892 192.108,187.88 180.012,186.099C 174.656,181.299 169.286,176.818 163.918,172.528C 158.431,176.795 152.943,181.265 147.471,186.066C 135.357,187.823 123.313,190.812 111.499,195.135C 119.997,196.254 128.612,197.661 137.288,199.617C 135.164,204.804 133.044,210.094 130.928,215.511 Z "
+                Fill="#9D004AFF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path2"
+                Canvas.Left="105.128"
+                Canvas.Top="164.505"
+                Width="117.206"
+                Height="48.7509"
+                Data="M 126.876,213.256C 138.958,207.384 151.203,203.381 163.45,200.869C 175.629,203.353 187.81,207.303 199.834,213.105C 197.603,206.965 195.368,200.98 193.128,195.118C 202.977,193.013 212.742,191.547 222.334,190.347C 209.157,185.298 195.656,181.832 182.056,179.795C 176.035,174.367 169.994,169.33 163.954,164.505C 157.781,169.304 151.608,174.324 145.456,179.751C 131.837,181.756 118.319,185.192 105.128,190.198C 114.615,191.473 124.272,192.992 134.014,195.124C 131.63,201.019 129.25,207.053 126.876,213.256 Z "
+                Fill="#9D0092FF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path3"
+                Canvas.Left="98.8056"
+                Canvas.Top="156.482"
+                Width="129.875"
+                Height="54.5669"
+                Data="M 122.836,211.049C 136.217,204.225 149.822,199.676 163.431,196.886C 176.964,199.646 190.498,204.135 203.817,210.877C 201.346,203.938 198.868,197.199 196.383,190.623C 207.305,188.335 218.11,186.735 228.68,185.31C 214.161,179.622 199.198,175.747 184.099,173.476C 177.415,167.427 170.703,161.844 163.993,156.482C 157.133,161.813 150.275,167.373 143.445,173.42C 128.323,175.651 113.34,179.485 98.8056,185.117C 109.26,186.634 119.946,188.298 130.748,190.62C 128.103,197.237 125.466,204.032 122.836,211.049 Z "
+                Fill="#9D00DFFF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path4"
+                Canvas.Left="92.5414"
+                Canvas.Top="148.457"
+                Width="142.43"
+                Height="60.4194"
+                Data="M 118.812,208.877C 133.478,201.066 148.443,195.972 163.412,192.903C 178.297,195.938 193.187,200.967 207.788,208.685C 205.079,200.921 202.36,193.412 199.635,186.108C 211.622,183.615 223.453,181.833 234.972,180.076C 219.149,173.831 202.735,169.609 186.14,167.135C 178.794,160.473 171.411,154.357 164.03,148.457C 156.484,154.322 148.94,160.411 141.432,167.067C 124.814,169.492 108.38,173.66 92.5414,179.831C 103.933,181.699 115.632,183.561 127.488,186.096C 124.586,193.446 121.693,201.02 118.812,208.877 Z "
+                Fill="#9D00FFD7"
+                Stretch="Fill" />
+            <Path
+                x:Name="path5"
+                Canvas.Left="86.3385"
+                Canvas.Top="140.434"
+                Width="154.862"
+                Height="66.294"
+                Data="M 114.802,206.728C 130.739,197.904 147.065,192.267 163.395,188.92C 179.632,192.233 195.875,197.796 211.744,206.517C 208.801,197.9 205.844,189.605 202.877,181.563C 215.921,178.835 228.764,176.803 241.201,174.58C 224.118,167.89 206.268,163.405 188.18,160.767C 180.175,153.505 172.12,146.869 164.068,140.434C 155.838,146.832 147.606,153.435 139.424,160.686C 121.311,163.264 103.438,167.684 86.3385,174.279C 98.6374,176.63 111.337,178.756 124.236,181.54C 121.079,189.632 117.932,198.003 114.802,206.728 Z "
+                Fill="#9D00FF8E"
+                Stretch="Fill" />
+            <Path
+                x:Name="path6"
+                Canvas.Left="80.2008"
+                Canvas.Top="132.41"
+                Width="167.163"
+                Height="72.1818"
+                Data="M 110.806,204.591C 127.999,194.732 145.685,188.56 163.375,184.936C 180.967,188.527 198.563,194.619 215.684,204.364C 212.508,194.867 209.316,185.765 206.11,176.975C 220.205,173.969 234.042,171.608 247.363,168.766C 229.066,161.765 209.793,157.118 190.218,154.365C 181.553,146.519 172.828,139.382 164.104,132.41C 155.188,139.34 146.271,146.44 137.415,154.271C 117.813,156.952 98.5162,161.521 80.2008,168.403C 93.3732,171.395 107.055,173.866 120.992,176.938C 117.58,185.784 114.184,194.97 110.806,204.591 Z "
+                Fill="#9D00FF46"
+                Stretch="Fill" />
+            <Path
+                x:Name="path7"
+                Canvas.Left="74.1375"
+                Canvas.Top="124.386"
+                Width="179.315"
+                Height="78.0681"
+                Data="M 106.83,202.454C 125.26,191.547 144.305,184.855 163.356,180.953C 182.301,184.821 201.251,191.427 219.608,202.212C 216.203,191.807 212.778,181.881 209.336,172.334C 224.471,168.998 239.285,166.214 253.453,162.569C 233.99,155.423 213.31,150.732 192.253,147.924C 182.932,139.514 173.538,131.893 164.142,124.386C 154.54,131.85 144.936,139.426 135.412,147.816C 114.325,150.543 93.617,155.14 74.1375,162.14C 88.148,165.954 102.794,168.867 117.758,172.279C 114.095,181.887 110.451,191.906 106.83,202.454 Z "
+                Fill="#9D03FF00"
+                Stretch="Fill" />
+            <Path
+                x:Name="path8"
+                Canvas.Left="68.151"
+                Canvas.Top="116.363"
+                Width="191.312"
+                Height="83.9416"
+                Data="M 102.872,200.305C 122.519,188.343 142.925,181.149 163.338,176.97C 183.635,181.115 203.941,188.219 223.515,200.05C 219.885,188.708 216.228,177.941 212.551,167.625C 228.717,163.901 244.487,160.582 259.463,155.93C 238.891,148.831 216.821,144.234 194.287,141.435C 184.311,132.485 174.245,124.405 164.178,116.363C 153.891,124.361 143.601,132.39 133.408,141.315C 110.841,144.019 88.7412,148.507 68.151,155.431C 82.9607,160.272 98.5514,163.739 114.534,167.551C 110.621,177.931 106.732,188.8 102.872,200.305 Z "
+                Fill="#9D4BFF00"
+                Stretch="Fill" />
+            <Path
+                x:Name="path9"
+                Canvas.Left="62.2505"
+                Canvas.Top="108.339"
+                Width="203.139"
+                Height="89.7914"
+                Data="M 98.936,198.13C 119.782,185.115 141.547,177.442 163.319,172.986C 184.969,177.411 206.629,184.988 227.402,197.865C 223.548,185.555 219.664,173.931 215.756,162.836C 232.941,158.658 249.647,154.677 265.389,148.788C 243.767,141.954 220.324,137.609 196.318,134.897C 185.692,125.432 174.955,116.916 164.218,108.339C 153.242,116.871 142.266,125.33 131.407,134.763C 107.367,137.369 83.8929,141.588 62.2505,148.215C 77.8164,154.312 94.3301,158.46 111.32,162.74C 107.161,173.902 103.031,185.64 98.936,198.13 Z "
+                Fill="#9D94FF00"
+                Stretch="Fill" />
+            <Path
+                x:Name="path10"
+                Canvas.Left="56.4387"
+                Canvas.Top="100.315"
+                Width="214.787"
+                Height="95.6035"
+                Data="M 95.021,195.919C 117.043,181.857 140.166,173.734 163.301,169.003C 186.304,173.706 209.318,181.73 231.268,195.649C 227.197,182.34 223.088,169.839 218.951,157.956C 237.144,153.245 254.763,148.463 271.226,141.083C 248.612,134.759 223.816,130.84 198.346,128.3C 187.071,118.35 175.663,109.426 164.254,100.315C 152.594,109.384 140.933,118.244 129.409,128.153C 103.902,130.575 79.0719,134.35 56.4387,140.43C 72.7178,148.039 90.1322,153.007 108.118,157.836C 103.715,169.788 99.3466,182.411 95.021,195.919 Z "
+                Fill="#9DDCFF00"
+                Stretch="Fill" />
+            <Path
+                x:Name="path11"
+                Canvas.Left="50.7208"
+                Canvas.Top="92.2908"
+                Width="226.246"
+                Height="101.367"
+                Data="M 91.127,193.658C 114.302,178.563 138.787,170.026 163.282,165.02C 187.639,170.003 212.008,178.44 235.114,193.387C 230.828,179.05 226.498,165.652 222.133,152.975C 241.325,147.644 259.833,141.903 276.967,132.754C 253.431,127.212 227.301,123.912 200.371,121.638C 188.45,111.238 176.372,101.935 164.292,92.2908C 151.946,101.897 139.598,111.128 127.413,121.479C 100.443,123.624 74.2782,126.759 50.7208,132.017C 67.6647,141.417 85.9566,147.363 104.928,152.827C 100.284,165.574 95.6807,179.102 91.127,193.658 Z "
+                Fill="#9DFFD900"
+                Stretch="Fill" />
+            <Path
+                x:Name="path12"
+                Canvas.Left="45.1046"
+                Canvas.Top="84.2675"
+                Width="237.502"
+                Height="107.07"
+                Data="M 87.2603,191.337C 111.565,175.231 137.406,166.317 163.262,161.036C 188.973,166.299 214.697,175.112 238.935,191.069C 234.439,175.67 229.892,161.359 225.303,147.878C 245.478,141.832 264.851,134.961 282.607,123.74C 258.216,119.28 230.775,116.813 202.393,114.907C 189.828,104.092 177.08,94.4432 164.328,84.2675C 151.297,94.4106 138.263,103.981 125.421,114.735C 96.9961,116.5 69.5185,118.783 45.1046,122.916C 62.6638,134.407 81.8083,141.504 101.751,147.7C 96.8683,161.251 92.0343,175.699 87.2603,191.337 Z "
+                Fill="#9DFF9100"
+                Stretch="Fill" />
+            <Path
+                x:Name="path13"
+                Canvas.Left="39.5939"
+                Canvas.Top="76.2443"
+                Width="248.546"
+                Height="112.699"
+                Data="M 83.4183,188.944C 108.827,171.854 136.028,162.608 163.245,157.053C 190.308,162.596 217.387,171.743 242.731,188.682C 238.03,172.189 233.269,156.947 228.459,142.654C 249.606,135.788 269.815,127.601 288.14,113.98C 262.97,110.928 234.241,109.524 204.414,108.099C 191.209,96.9112 177.789,86.9493 164.366,76.2443C 150.649,86.9245 136.928,96.7991 123.432,107.916C 93.5583,109.189 64.7901,110.387 39.5939,113.063C 57.715,126.974 77.6861,135.408 98.5853,142.442C 93.4697,156.804 88.4101,172.191 83.4183,188.944 Z "
+                Fill="#9DFF4400"
+                Stretch="Fill" />
+            <Path
+                x:Name="path14"
+                Canvas.Left="34.1941"
+                Canvas.Top="68.2197"
+                Width="259.366"
+                Height="118.247"
+                Data="M 79.6025,186.467C 106.088,168.428 134.648,158.899 163.225,153.07C 191.642,158.895 220.076,168.326 246.503,186.215C 241.601,168.595 236.629,152.404 231.602,137.291C 253.706,129.49 274.725,119.787 293.56,103.414C 267.688,102.124 237.694,102.032 206.429,101.208C 192.588,89.6911 178.497,79.4567 164.404,68.2197C 150,79.4411 135.593,89.5828 121.448,101.015C 90.1322,101.676 60.0956,101.539 34.1941,102.403C 52.8237,119.083 73.5912,129.058 95.4369,137.042C 90.0892,152.221 84.8054,168.564 79.6025,186.467 Z "
+                Fill="#9DFF0004"
+                Stretch="Fill" />
+            <Path
+                x:Name="path15"
+                Canvas.Left="28.9129"
+                Canvas.Top="60.1964"
+                Width="269.951"
+                Height="123.695"
+                Data="M 75.8166,183.892C 103.35,164.947 133.268,155.187 163.207,149.087C 192.977,155.194 222.766,164.858 250.246,183.657C 245.148,164.875 239.972,147.715 234.729,131.777C 257.776,122.92 279.575,111.481 298.864,91.9805C 272.368,92.8331 241.137,94.3219 208.441,94.2281C 193.966,82.4305 179.206,71.9615 164.442,60.1964C 149.352,71.9575 134.258,82.3262 119.464,94.0273C 86.7166,93.9465 55.4375,92.2047 28.9129,90.8696C 47.9896,110.696 69.5263,122.428 92.3016,131.488C 86.7257,147.489 81.2255,164.805 75.8166,183.892 Z "
+                Fill="#9DFF004D"
+                Stretch="Fill" />
+            <Path
+                x:Name="path16"
+                Canvas.Left="23.7543"
+                Canvas.Top="52.1719"
+                Width="280.289"
+                Height="129.035"
+                Data="M 72.0594,181.207C 100.611,161.406 131.889,151.475 163.188,145.103C 194.31,151.494 225.455,161.333 253.963,180.995C 248.674,161.018 243.296,142.872 237.843,126.101C 261.817,116.054 284.364,102.646 304.043,79.6196C 277.012,83.0211 244.567,86.3783 210.449,87.154C 195.345,75.1256 179.914,64.4636 164.478,52.1719C 148.702,64.4753 132.923,75.0279 117.485,86.9454C 83.3114,85.9845 50.816,82.3497 23.7543,78.4058C 43.2182,101.777 65.4928,115.499 89.1806,125.768C 83.3818,142.596 77.6678,160.902 72.0594,181.207 Z "
+                Fill="#9DFF0095"
+                Stretch="Fill" />
+            <Path
+                x:Name="path17"
+                Canvas.Left="18.7247"
+                Canvas.Top="44.1487"
+                Width="290.369"
+                Height="134.253"
+                Data="M 68.3348,178.402C 97.8735,157.8 130.51,147.764 163.171,141.12C 195.645,147.795 228.145,157.748 257.648,178.218C 252.175,157.009 246.599,137.859 240.94,120.248C 265.825,108.872 289.089,93.2503 309.094,66.2693C 281.615,72.6563 247.987,78.1868 212.455,79.9795C 196.725,67.7751 180.623,56.9658 164.516,44.1487C 148.055,56.9958 131.588,67.6878 115.511,79.7644C 79.9206,77.7775 46.2362,71.9445 18.7247,64.9512C 38.5119,92.2895 61.4918,108.249 86.0778,119.868C 80.06,137.527 74.1375,156.842 68.3348,178.402 Z "
+                Fill="#9DFF00DE"
+                Stretch="Fill" />
+            <Path
+                x:Name="path18"
+                Canvas.Left="13.8281"
+                Canvas.Top="36.1242"
+                Width="300.181"
+                Height="139.339"
+                Data="M 64.6415,175.463C 95.1358,154.123 129.13,144.051 163.151,137.137C 196.98,144.096 230.835,154.095 261.304,175.316C 255.651,152.837 249.883,132.665 244.019,114.209C 269.8,101.353 293.746,83.2532 314.009,51.8708C 286.176,61.7023 251.39,69.7308 214.455,72.6981C 198.104,60.3751 181.331,49.4667 164.553,36.1242C 147.405,49.5162 130.252,60.3008 113.538,72.4778C 76.5401,69.3083 41.6968,60.9513 13.8281,50.4445C 33.8721,82.1985 57.5247,100.657 82.992,113.778C 76.7578,132.273 70.6319,152.611 64.6415,175.463 Z "
+                Fill="#9DD800FF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path19"
+                Canvas.Left="9.07098"
+                Canvas.Top="28.1009"
+                Width="309.713"
+                Height="144.279"
+                Data="M 60.9821,172.38C 92.398,150.371 127.75,140.336 163.132,133.153C 198.314,140.399 233.525,150.371 264.925,172.275C 259.102,148.491 253.145,127.277 247.083,107.971C 273.739,93.4745 298.333,72.6199 318.784,36.3614C 290.694,50.1277 254.783,60.997 216.451,65.3032C 199.482,52.9242 182.04,41.9662 164.592,28.1009C 146.757,42.0392 128.918,52.8669 111.573,65.0816C 73.1753,60.5628 37.1991,49.3389 9.07098,34.8217C 29.3014,71.466 53.5928,92.7027 79.9232,107.485C 73.4778,126.819 67.1536,148.201 60.9821,172.38 Z "
+                Fill="#9D8F00FF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path20"
+                Canvas.Left="4.45988"
+                Canvas.Top="18.0295"
+                Width="318.952"
+                Height="151.11"
+                Data="M 57.3591,169.14C 89.6616,146.54 126.371,136.621 163.113,129.17C 199.648,136.701 236.216,146.571 268.516,169.085C 262.524,143.957 256.386,121.684 250.129,101.521C 277.643,85.2179 302.848,61.3138 323.412,19.6826C 295.165,37.8986 258.159,51.9686 218.443,57.7885C 200.861,45.4185 182.748,34.4632 164.628,20.0764C 146.108,34.5635 127.582,45.3808 109.609,57.5668C 69.8223,51.5266 32.747,37.0733 4.45988,18.0295C 24.805,60.0557 49.6961,84.364 76.8726,100.976C 70.2199,121.153 63.7041,143.593 57.3591,169.14 Z "
+                Fill="#9D4700FF"
+                Stretch="Fill" />
+            <Path
+                x:Name="path21"
+                Canvas.Left="0"
+                Canvas.Top="0"
+                Width="327.89"
+                Height="165.733"
+                Data="M 0,0C 20.3843,47.9322 45.8399,75.6185 73.8428,94.2398C 66.9868,115.261 60.2846,138.777 53.7727,165.729C 86.9252,142.62 124.991,132.904 163.095,125.185C 200.984,133.007 238.908,142.69 272.071,165.733C 265.92,139.223 259.604,115.87 253.156,94.8487C 281.509,76.5597 307.288,49.2985 327.89,1.77051C 299.591,24.9797 261.523,42.6312 220.431,50.1485C 202.241,37.8555 183.457,26.9588 164.666,12.0518C 145.46,27.0892 126.247,37.8412 107.651,49.9282C 66.4849,42.184 28.3419,24.1206 0,0 Z "
+                Fill="#9D0003FF"
+                Stretch="Fill" />
+            <TextBlock
+                Text="Bu Uygulama Gökşen PASLI Tarafından Yapılmıştır."
+                Canvas.Left="88.744"
+                Canvas.Top="64.087"
+                Width="152.456"
+                Height="60.299"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                FontSize="14"
+                Foreground="White"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+        </Canvas>
+    </Grid>
+</Window>

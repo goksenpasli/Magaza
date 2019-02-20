@@ -1,0 +1,2597 @@
+﻿<Window
+    x:Class="Magaza.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ice="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+    xmlns:local="clr-namespace:Magaza"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    x:Name="Window"
+    Title="Satış"
+    Width="1024"
+    Height="576"
+    MinHeight="576"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        <local:ByteArrayToImageSource x:Key="ByteArrayToImageSource" />
+        <local:İadeGünGeçtiMiConverter x:Key="İadeGünGeçtiMiConverter" />
+        <local:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+        <local:ToptancıBorçConverter x:Key="ToptancıBorçConverter" />
+        <local:SıfırStokConverter x:Key="SıfırStokConverter" />
+        <local:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+        <local:KdvValueConverter x:Key="KdvValueConverter" />
+        <local:ProgressValueConverter x:Key="ProgressValueConverter" />
+        <local:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Fade</PopupAnimation>
+        <x:Array x:Key="Ölçüler" Type="{x:Type system:String}">
+            <system:String>KİLOGRAM</system:String>
+            <system:String>LİTRE</system:String>
+            <system:String>TON</system:String>
+            <system:String>METRE</system:String>
+            <system:String>ADET</system:String>
+        </x:Array>
+        <Style x:Key="BorçStyle" TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ToptanciyaOlanBorc, Converter={StaticResource ToptancıBorçConverter}}" Value="true">
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SıfırStok" TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding KalanMiktar, Converter={StaticResource SıfırStokConverter}}" Value="true">
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <TabControl Background="{x:Null}">
+            <TabItem Header="ÜRÜN GİRİŞLERİ">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="116*" />
+                        <ColumnDefinition Width="389*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="115" />
+                        <RowDefinition Height="119.5" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <GroupBox
+                        Header="ÜRÜN GRUPLARI"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="1"
+                        Margin="0,2,2,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="85" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Toptancı" />
+                                <ComboBox
+                                    x:Name="CbGrupToptancı"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    VerticalContentAlignment="Center"
+                                    ItemsSource="{Binding ObservableCollectionToptancılar}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                    <ComboBox.DataContext>
+                                        <local:Toptancilar />
+                                    </ComboBox.DataContext>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Adi}" VerticalAlignment="Center" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Text="{Binding VergiNo, StringFormat=VergiNo: \{0\}}"
+                                                            FontStyle="Italic"
+                                                            Foreground="DarkBlue" />
+                                                        <TextBlock
+                                                            Text="{Binding Telefon, StringFormat=' Telefon: \{0\}'}"
+                                                            FontStyle="Italic"
+                                                            Foreground="Blue" />
+                                                        <TextBlock
+                                                            Text="{Binding ToptanciyaOlanBorc, StringFormat=' Toptancıya Olan Borç: \{0:C\}'}"
+                                                            FontStyle="Italic"
+                                                            Foreground="Purple" />
+                                                    </StackPanel>
+                                                    <TextBlock
+                                                        Text="{Binding Adres, StringFormat=Adres: \{0\}}"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Red" />
+                                                    <TextBlock
+                                                        Text="{Binding Aciklama}"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="YellowGreen" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Text="Kategori" Grid.Row="1" />
+                                <ComboBox
+                                    x:Name="CbGrupKategori"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    VerticalContentAlignment="Center"
+                                    DisplayMemberPath="KategoriAdi"
+                                    ItemsSource="{Binding ObservableCollectionÜrünKategorileri}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                    <ComboBox.DataContext>
+                                        <local:UrunKategorileri />
+                                    </ComboBox.DataContext>
+                                </ComboBox>
+                                <Button
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Command="{Binding Eşleştir}"
+                                    CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                    <Button.DataContext>
+                                        <local:UrunGruplari />
+                                    </Button.DataContext>
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding ElementName="CbGrupToptancı" Path="SelectedItem" />
+                                            <Binding ElementName="CbGrupKategori" Path="SelectedItem" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            Source="icons/imageres_5357.png" />
+                                        <AccessText
+                                            Text="_EŞLEŞTİR"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbToptancıGirişi"
+                        Header="TOPTANCI GİRİŞİ"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="1"
+                        Margin="2,0,0,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Toptancilar />
+                        </GroupBox.DataContext>
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="106*" />
+                                    <ColumnDefinition Width="239*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Text="Adı"
+                                        Height="16"
+                                        Margin="0,4,0,5" />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="Adi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Telefon"
+                                        Grid.Row="1"
+                                        Height="16"
+                                        Margin="0,5,0,4" />
+                                    <xctk:MaskedTextBox
+                                        Text="{Binding Telefon}"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        Mask="(000) 000 00 00">
+                                        <xctk:MaskedTextBox.Style>
+                                            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}" />
+                                        </xctk:MaskedTextBox.Style>
+                                    </xctk:MaskedTextBox>
+                                    <TextBlock
+                                        Text="Vergi No"
+                                        Grid.Row="2"
+                                        Height="16"
+                                        Margin="0,3" />
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        MaxLength="10">
+                                        <Binding
+                                            Path="VergiNo"
+                                            TargetNullValue=""
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:VergiNoDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Toptancıya Borç"
+                                        Grid.Row="3"
+                                        Height="16"
+                                        Margin="0,5,0,4" />
+                                    <TextBox
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="ToptanciyaOlanBorc"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:SıfırDahilSıfırdandanBüyük ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Açıklama"
+                                        Grid.Row="4"
+                                        Height="16"
+                                        Margin="0,4,0,6" />
+                                    <TextBox
+                                        Text="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper" />
+                                    <TextBlock
+                                        Text="Adres"
+                                        Grid.Row="5"
+                                        Height="16"
+                                        Margin="0,5,0,4" />
+                                    <TextBox
+                                        Text="{Binding Adres, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper" />
+                                    <TextBlock
+                                        Text="Mal Alım Tarihi"
+                                        Grid.Row="6"
+                                        Height="16"
+                                        Margin="0,5" />
+                                    <DatePicker
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        DisplayDateEnd="{x:Static system:DateTime.Now}"
+                                        DisplayDateStart="01/01/1753">
+                                        <DatePicker.SelectedDate>
+                                            <Binding
+                                                Path="MalAlimTarihi"
+                                                TargetNullValue="{x:Static system:DateTime.Now}"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:TarihDoğrula ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
+                                    <Button
+                                        Grid.Row="7"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding Ekle}"
+                                        CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="24"
+                                                HorizontalAlignment="Center"
+                                                Source="icons/shell32_16802.png" />
+                                            <AccessText
+                                                Text="_TOPTANCIYI EKLE"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <GroupBox
+                                        x:Name="GbToptancılar"
+                                        Margin="2,0,0,0"
+                                        Template="{StaticResource TintedGroupBox}">
+                                        <GroupBox.Header>
+                                            <UniformGrid Columns="3" Rows="1">
+                                                <TextBlock Text="TOPTANCILAR" />
+                                                <xctk:WatermarkTextBox
+                                                    Text="{Binding Filtre, UpdateSourceTrigger=PropertyChanged}"
+                                                    VerticalContentAlignment="Center"
+                                                    AutoSelectBehavior="OnFocus"
+                                                    CharacterCasing="Upper"
+                                                    Watermark="Arama Yapmak İçin Toptancı Adını Yazın." />
+                                                <Button Command="{Binding RaporAl}" IsEnabled="{Binding Items.IsEmpty, Converter={StaticResource NegateBooleanConverter}, ElementName=DgToptancılar}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image
+                                                            Width="24"
+                                                            HorizontalAlignment="Center"
+                                                            Source="icons/6.png" />
+                                                        <AccessText
+                                                            Text="_RAPOR AL"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </UniformGrid>
+                                        </GroupBox.Header>
+                                        <DataGrid
+                                            x:Name="DgToptancılar"
+                                            AlternatingRowBackground="NavajoWhite"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserDeleteRows="False"
+                                            ItemsSource="{Binding Cv}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn
+                                                    Binding="{Binding Adi, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="ADI"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTemplateColumn Header="TELEFON">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <xctk:MaskedTextBox
+                                                                Text="{Binding Telefon, UpdateSourceTrigger=PropertyChanged}"
+                                                                CharacterCasing="Upper"
+                                                                Mask="(000) 000 00 00">
+                                                                <xctk:MaskedTextBox.Style>
+                                                                    <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}" />
+                                                                </xctk:MaskedTextBox.Style>
+                                                            </xctk:MaskedTextBox>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn
+                                                    Binding="{Binding Adres, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="ADRES"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding ToptanciyaOlanBorc, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="BORÇ"
+                                                    CellStyle="{StaticResource BorçStyle}"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn Header="VERGİ NO" EditingElementStyle="{StaticResource DataGridTextBoxUpper}">
+                                                    <DataGridTextColumn.Binding>
+                                                        <Binding Path="VergiNo" UpdateSourceTrigger="PropertyChanged">
+                                                            <Binding.ValidationRules>
+                                                                <local:VergiNoDoğrula ValidatesOnTargetUpdated="True" />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </DataGridTextColumn.Binding>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn Header="MAL ALIM TARİHİ">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <DatePicker DisplayDateEnd="{x:Static system:DateTime.Now}" DisplayDateStart="01/01/1753">
+                                                                <DatePicker.SelectedDate>
+                                                                    <Binding
+                                                                        Path="MalAlimTarihi"
+                                                                        TargetNullValue="{x:Static system:DateTime.Now}"
+                                                                        UpdateSourceTrigger="PropertyChanged">
+                                                                        <Binding.ValidationRules>
+                                                                            <local:TarihDoğrula ValidatesOnTargetUpdated="True" />
+                                                                        </Binding.ValidationRules>
+                                                                    </Binding>
+                                                                </DatePicker.SelectedDate>
+                                                            </DatePicker>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding Güncelle}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image
+                                                                        Width="16"
+                                                                        HorizontalAlignment="Center"
+                                                                        Source="icons/update.png" />
+                                                                    <AccessText
+                                                                        Text="_GÜNCELLE"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </GroupBox>
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbÜrünGirişleri"
+                        Header="ÜRÜN GİRİŞLERİ"
+                        Grid.Row="2"
+                        Grid.RowSpan="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,2,0,0"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Urunler />
+                        </GroupBox.DataContext>
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="71*" />
+                                    <ColumnDefinition Width="179*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid x:Name="GdÜrünGirişleri" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Text="Ürün Adı"
+                                        Grid.Row="0"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="UrunAdi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Birimi"
+                                        Grid.Row="1"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <ComboBox
+                                        x:Name="CbÖlçüBirimi"
+                                        Text="{Binding OlcuBirimi, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        ItemsSource="{StaticResource Ölçüler}" />
+                                    <TextBlock
+                                        Text="Ürün Grupları"
+                                        Grid.Row="2"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <ComboBox
+                                        x:Name="CbÜrünGrupları"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        ItemsSource="{Binding ObservableCollectionÜrünGrupları}">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <Run Text="{Binding Toptancilar.Adi}" />
+                                                    <Run Text=" " />
+                                                    <Run Text="{Binding UrunKategorileri.KategoriAdi}" Foreground="Red" />
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock
+                                        Text="Alış Fiyat (Kdv Dahil)"
+                                        Grid.Row="3"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <xctk:DoubleUpDown
+                                        x:Name="doubleUpDown"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        FormatString="C"
+                                        Increment="0.25"
+                                        Minimum="0"
+                                        Watermark="Alış Fiyatı Girin">
+                                        <xctk:DoubleUpDown.Value>
+                                            <Binding
+                                                Path="AlisFiyat"
+                                                UpdateSourceTrigger="PropertyChanged"
+                                                ValidatesOnDataErrors="True">
+                                                <Binding.ValidationRules>
+                                                    <local:SıfırDahilSıfırdandanBüyük ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </xctk:DoubleUpDown.Value>
+                                    </xctk:DoubleUpDown>
+                                    <TextBlock
+                                        Text="Satış Fiyat"
+                                        Grid.Row="4"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <xctk:DoubleUpDown
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        FormatString="C"
+                                        Increment="0.25"
+                                        Minimum="{Binding Value, ElementName=doubleUpDown}"
+                                        Watermark="Satış Fiyatı Girin">
+                                        <xctk:DoubleUpDown.Value>
+                                            <Binding
+                                                Path="SatisFiyat"
+                                                UpdateSourceTrigger="PropertyChanged"
+                                                ValidatesOnDataErrors="True">
+                                                <Binding.ValidationRules>
+                                                    <local:SıfırdanBüyük ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </xctk:DoubleUpDown.Value>
+                                    </xctk:DoubleUpDown>
+                                    <xctk:DoubleUpDown
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        FormatString="F"
+                                        Minimum="0"
+                                        Watermark="Kdv Oranı Girin Örn: 8"
+                                        Value="{Binding Kdv, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock
+                                        Text="Kdv %"
+                                        Grid.Row="5"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <TextBlock
+                                        Text="Kdvsiz Fiyat"
+                                        Grid.Row="6"
+                                        Grid.Column="0"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <TextBox
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        IsEnabled="False">
+                                        <MultiBinding Converter="{StaticResource KdvValueConverter}">
+                                            <Binding Path="AlisFiyat" />
+                                            <Binding Path="Kdv" />
+                                        </MultiBinding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="{Binding Text, ElementName=CbÖlçüBirimi, StringFormat=Adet (\{0\})}"
+                                        Grid.Row="7"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <TextBox
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="KalanMiktar"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:SıfırdanBüyük ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Açıklama"
+                                        Grid.Row="8"
+                                        Height="16"
+                                        Margin="0,4" />
+                                    <TextBox
+                                        Text="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="8"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper" />
+                                    <Button
+                                        Grid.Row="9"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding Ekle}"
+                                        CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbÜrünGrupları}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="24"
+                                                HorizontalAlignment="Center"
+                                                Source="icons/shell32_16802.png" />
+                                            <AccessText
+                                                Text="_ÜRÜN GİRİŞİ YAP"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="111" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <GroupBox
+                                        x:Name="GBÜrünlerTablosu"
+                                        Margin="2,0,0,0"
+                                        Template="{StaticResource TintedGroupBox}">
+                                        <GroupBox.Header>
+                                            <UniformGrid Columns="3" Rows="1">
+                                                <TextBlock Text="ÜRÜNLER" />
+                                                <xctk:WatermarkComboBox
+                                                    x:Name="WmCbKriter"
+                                                    DisplayMemberPath="Header"
+                                                    ItemsSource="{Binding Columns, ElementName=DgÜrünler}"
+                                                    SelectedItem="{Binding Kriter, UpdateSourceTrigger=PropertyChanged}"
+                                                    Watermark="Kriter Seçin." />
+                                                <xctk:WatermarkTextBox
+                                                    Text="{Binding Filtre, UpdateSourceTrigger=PropertyChanged}"
+                                                    VerticalContentAlignment="Center"
+                                                    AutoSelectBehavior="OnFocus"
+                                                    CharacterCasing="Upper"
+                                                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=WmCbKriter}"
+                                                    Watermark="Arama Metnini Girin." />
+                                            </UniformGrid>
+                                        </GroupBox.Header>
+                                        <DataGrid
+                                            x:Name="DgÜrünler"
+                                            AlternatingRowBackground="NavajoWhite"
+                                            AutoGenerateColumns="False"
+                                            CanUserAddRows="False"
+                                            CanUserDeleteRows="False"
+                                            ItemsSource="{Binding Cv}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn
+                                                    Binding="{Binding UrunID}"
+                                                    Header="ÜRÜN&#xA;ID"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                                                    IsReadOnly="True" />
+                                                <DataGridCheckBoxColumn
+                                                    Binding="{Binding Favori, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="FAVORİ"
+                                                    IsThreeState="False" />
+                                                <DataGridTextColumn Header="ÜRÜN&#xA;ADI" EditingElementStyle="{StaticResource DataGridTextBoxUpper}">
+                                                    <DataGridTextColumn.Binding>
+                                                        <Binding
+                                                            Path="UrunAdi"
+                                                            UpdateSourceTrigger="PropertyChanged"
+                                                            ValidatesOnDataErrors="True">
+                                                            <Binding.ValidationRules>
+                                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </DataGridTextColumn.Binding>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn
+                                                    Binding="{Binding AlisFiyat, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="ALIŞ&#xA;FİYATI"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding SatisFiyat, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="SATIŞ&#xA;FİYATI"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding Kdv, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="KDV"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding ToplamMiktar, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="TOPLAM&#xA;ALIM&#xA;MİKTARI"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                                                    IsReadOnly="True" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding KalanMiktar, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="DEPODA&#xA;KALAN&#xA;MİKTAR"
+                                                    CellStyle="{StaticResource SıfırStok}"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridComboBoxColumn
+                                                    Header="BİRİMİ"
+                                                    ItemsSource="{StaticResource Ölçüler}"
+                                                    TextBinding="{Binding OlcuBirimi, UpdateSourceTrigger=PropertyChanged}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="AÇIKLAMA"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding UrunGruplari.Toptancilar.Adi, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="TOPTANCI"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                                                    IsReadOnly="True" />
+                                                <DataGridTextColumn
+                                                    Binding="{Binding UrunGruplari.UrunKategorileri.KategoriAdi, UpdateSourceTrigger=PropertyChanged}"
+                                                    Header="KATEGORİ"
+                                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                                                    IsReadOnly="True" />
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image
+                                                                Width="48"
+                                                                Height="48"
+                                                                ice:Freeze="True"
+                                                                DataContext="{Binding DataContext, ElementName=DgÜrünler}"
+                                                                RenderOptions.BitmapScalingMode="LowQuality"
+                                                                RenderOptions.CachingHint="Cache"
+                                                                Source="{Binding SelectedItem.Resim, IsAsync=True, Converter={StaticResource ByteArrayToImageSource}, ElementName=DgÜrünler}">
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                                        <i:InvokeCommandAction Command="{Binding ResimKaydet}" CommandParameter="{Binding SelectedItem.Resim, ElementName=DgÜrünler}" />
+                                                                    </i:EventTrigger>
+                                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                                        <i:InvokeCommandAction Command="{Binding ResimSil}" CommandParameter="{Binding SelectedItem, ElementName=DgÜrünler}" />
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                                <Image.ToolTip>
+                                                                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                        <Image
+                                                                            Width="512"
+                                                                            Height="384"
+                                                                            ice:Freeze="True"
+                                                                            Source="{Binding Source}" />
+                                                                    </ToolTip>
+                                                                </Image.ToolTip>
+                                                            </Image>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding ÜrünResim}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image
+                                                                        Width="16"
+                                                                        HorizontalAlignment="Center"
+                                                                        ice:Freeze="True"
+                                                                        Source="Icons/imageres_72.png" />
+                                                                    <AccessText
+                                                                        Text="RESİ_M"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Button
+                                                                Content="TÜM&#xA;ÜRÜNLERE&#xA;BARKOD AL"
+                                                                Command="{Binding ÜrünBarkod}"
+                                                                DataContext="{Binding DataContext, ElementName=DgÜrünler}"
+                                                                IsEnabled="{Binding Items.IsEmpty, Converter={StaticResource NegateBooleanConverter}, ElementName=DgÜrünler}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding Güncelle}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image
+                                                                        Width="16"
+                                                                        HorizontalAlignment="Center"
+                                                                        ice:Freeze="True"
+                                                                        Source="icons/update.png" />
+                                                                    <AccessText
+                                                                        Text="GÜN_CELLE"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </GroupBox>
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbÜrünKategorileri"
+                        Header="ÜRÜN KATEGORİLERİ"
+                        Margin="0,0,2,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:UrunKategorileri />
+                        </GroupBox.DataContext>
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="96" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Kategori Adı" />
+                                <TextBox
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    CharacterCasing="Upper">
+                                    <Binding
+                                        Path="KategoriAdi"
+                                        UpdateSourceTrigger="PropertyChanged"
+                                        ValidatesOnDataErrors="True">
+                                        <Binding.ValidationRules>
+                                            <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox>
+                                <Button
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Command="{Binding Ekle}"
+                                    CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            Source="icons/shell32_16802.png" />
+                                        <AccessText
+                                            Text="_KATEGORİ EKLE"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <xctk:DropDownButton Grid.Row="2" Grid.ColumnSpan="2">
+                                    <xctk:DropDownButton.DropDownContent>
+                                        <local:ResizablePanel
+                                            Width="220"
+                                            Height="100"
+                                            MinWidth="220"
+                                            MinHeight="100">
+                                            <DataGrid
+                                                AutoGenerateColumns="False"
+                                                IsReadOnly="True"
+                                                ItemsSource="{Binding ObservableCollectionÜrünKategorileri}">
+                                                <DataGrid.RowDetailsTemplate>
+                                                    <DataTemplate>
+                                                        <DataGrid
+                                                            Margin="1"
+                                                            AutoGenerateColumns="False"
+                                                            CanUserSortColumns="False"
+                                                            IsReadOnly="True"
+                                                            ItemsSource="{Binding DataContext.UrunGruplari, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}">
+                                                            <DataGrid.Columns>
+                                                                <DataGridTextColumn Binding="{Binding Toptancilar.Adi}" Header="TOPTANCI ADI" />
+                                                                <DataGridTextColumn Binding="{Binding Toptancilar.MalAlimTarihi, StringFormat=\{0:d\}}" Header="MAL ALIM TARİHİ" />
+                                                                <DataGridTextColumn Binding="{Binding Toptancilar.Telefon}" Header="TELEFON" />
+                                                            </DataGrid.Columns>
+                                                        </DataGrid>
+                                                    </DataTemplate>
+                                                </DataGrid.RowDetailsTemplate>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn Binding="{Binding KategoriAdi}" Header="KATEGORİ ADI" />
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </local:ResizablePanel>
+                                    </xctk:DropDownButton.DropDownContent>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            Source="icons/imageres_177.png" />
+                                        <AccessText
+                                            Text="KATEGORİLERİ _GÖR"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </xctk:DropDownButton>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="SATIŞLAR">
+                <Grid x:Name="GdSatışlar">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="401*" />
+                        <ColumnDefinition Width="609*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="190" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <GroupBox
+                        x:Name="GbSatışlar"
+                        Header="SATIŞLAR"
+                        Grid.Row="0"
+                        Margin="0,0,2,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Satış />
+                        </GroupBox.DataContext>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <AdornerDecorator>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="23*" />
+                                        <RowDefinition Height="23*" />
+                                        <RowDefinition Height="23*" />
+                                        <RowDefinition Height="23*" />
+                                        <RowDefinition Height="23*" />
+                                        <RowDefinition Height="23*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="ÜRÜNID" Grid.Row="0" />
+                                    <TextBox
+                                        x:Name="TxUrunID"
+                                        Text="{Binding ID, TargetNullValue='', UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        ToolTip="ÜrünID'sini Girip F2'ye Basarsanız Direkt 1 Adet Satış İşlenir.">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="F2" Command="{Binding HızlıGiriş}" />
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                    <TextBlock Grid.Row="1">
+                                        <Hyperlink KeyboardNavigation.IsTabStop="False">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Click">
+                                                    <ei:ChangePropertyAction
+                                                        PropertyName="SelectedIndex"
+                                                        TargetObject="{Binding ElementName=CbMüşteriler}"
+                                                        TargetName="CbMüşteriler"
+                                                        Value="-1" />
+                                                    <ei:ChangePropertyAction
+                                                        PropertyName="SelectedIndex"
+                                                        TargetObject="{Binding ElementName=CbÖdemeTipi}"
+                                                        TargetName="CbÖdemeTipi"
+                                                        Value="0" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <InlineUIContainer>
+                                                <TextBlock Text="Müşteri" ToolTip="Müşteri İsmi Girmek İstemiyorsanız Tıklayın." />
+                                            </InlineUIContainer>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                    <ComboBox
+                                        x:Name="CbMüşteriler"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        IsTextSearchEnabled="True"
+                                        ItemsSource="{Binding ObservableCollectionMüşteriler}"
+                                        TextSearch.TextPath="Tc">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Width="48"
+                                                        Height="48"
+                                                        HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                                        RenderOptions.CachingHint="Cache"
+                                                        Source="{Binding Resim, Converter={StaticResource ByteArrayToImageSource}}"
+                                                        Visibility="{Binding Resim, Converter={StaticResource NullVisibilityConverter}}">
+                                                        <Image.OpacityMask>
+                                                            <VisualBrush>
+                                                                <VisualBrush.Visual>
+                                                                    <Border
+                                                                        Name="Mask"
+                                                                        BorderBrush="#FF3B5998"
+                                                                        BorderThickness="1"
+                                                                        CornerRadius="0.2" />
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Image.OpacityMask>
+                                                        <Image.ContextMenu>
+                                                            <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                                                <MenuItem
+                                                                    Header="RESİM KAYDET"
+                                                                    Command="{Binding ResimKaydet}"
+                                                                    CommandParameter="{Binding Resim}" />
+                                                            </ContextMenu>
+                                                        </Image.ContextMenu>
+                                                        <Image.ToolTip>
+                                                            <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                <Image
+                                                                    Width="512"
+                                                                    Height="384"
+                                                                    ice:Freeze="True"
+                                                                    Source="{Binding Source}" />
+                                                            </ToolTip>
+                                                        </Image.ToolTip>
+                                                    </Image>
+                                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                        <StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Adi}" VerticalAlignment="Center" />
+                                                                <TextBlock Text="{Binding Soyadi, StringFormat=' \{0\}'}" VerticalAlignment="Center" />
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock
+                                                                    Text="{Binding Tc, StringFormat=Tc: \{0\}}"
+                                                                    FontStyle="Italic"
+                                                                    Foreground="DarkBlue" />
+                                                                <TextBlock
+                                                                    Text="{Binding Telefon, StringFormat=' Telefon: \{0\}'}"
+                                                                    FontStyle="Italic"
+                                                                    Foreground="Blue" />
+                                                                <TextBlock
+                                                                    Text="{Binding Eposta, StringFormat=' E Posta: \{0\}'}"
+                                                                    FontStyle="Italic"
+                                                                    Foreground="Purple" />
+                                                            </StackPanel>
+                                                            <TextBlock
+                                                                Text="{Binding Adres, StringFormat=Adres: \{0\}}"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="Red" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <ToggleButton
+                                        x:Name="TbÜrünler"
+                                        Content="Ürünler"
+                                        Grid.Row="2">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Checked">
+                                                <i:InvokeCommandAction Command="{Binding HızlıSatışFiltreler}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </ToggleButton>
+                                    <Popup
+                                        IsOpen="{Binding IsChecked, ElementName=TbÜrünler}"
+                                        Placement="Bottom"
+                                        PlacementTarget="{Binding ElementName=TbÜrünler}"
+                                        PopupAnimation="Slide"
+                                        StaysOpen="False">
+                                        <local:ResizablePanel
+                                            Width="390"
+                                            Height="150"
+                                            MinWidth="200"
+                                            MinHeight="85">
+                                            <Grid>
+                                                <Grid.Background>
+                                                    <LinearGradientBrush ice:Freeze="True" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" EndPoint="0.5,1">
+                                                        <GradientStop ice:Freeze="True" Color="White" />
+                                                        <GradientStop ice:Freeze="True" Offset="1" Color="#E50074FF" />
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                                <ItemsControl
+                                                    ItemsSource="{Binding ÜrünlerFilteredObservableCollection}"
+                                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Button>
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="Click">
+                                                                        <i:InvokeCommandAction Command="{Binding HızlıSatışEkle}" CommandParameter="{Binding Mode=OneWay}" />
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                                <StackPanel Orientation="Vertical">
+                                                                    <TextBlock Text="{Binding UrunAdi}" VerticalAlignment="Center" />
+                                                                    <TextBlock
+                                                                        Text="{Binding SatisFiyat, StringFormat=\{0:C\}}"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="Green" />
+                                                                    <Image
+                                                                        Width="48"
+                                                                        Height="48"
+                                                                        HorizontalAlignment="Left"
+                                                                        Source="{Binding Resim, Converter={StaticResource ByteArrayToImageSource}}">
+                                                                        <Image.ToolTip>
+                                                                            <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                                <Image
+                                                                                    Width="512"
+                                                                                    Height="384"
+                                                                                    ice:Freeze="True"
+                                                                                    Source="{Binding Source}" />
+                                                                            </ToolTip>
+                                                                        </Image.ToolTip>
+                                                                    </Image>
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.Template>
+                                                        <ControlTemplate>
+                                                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                                <ItemsPresenter />
+                                                            </ScrollViewer>
+                                                        </ControlTemplate>
+                                                    </ItemsControl.Template>
+                                                </ItemsControl>
+                                            </Grid>
+                                        </local:ResizablePanel>
+                                    </Popup>
+                                    <ComboBox
+                                        x:Name="CbÜrün"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        IsTextSearchEnabled="True"
+                                        ItemsSource="{Binding ObservableCollectionÜrünler}"
+                                        TextSearch.TextPath="UrunAdi">
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ComboBoxItem}">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding KalanMiktar}" Value="0">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ÜrünDeğiştirme}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                    <Image
+                                                        Width="48"
+                                                        Height="48"
+                                                        HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                                        RenderOptions.CachingHint="Cache"
+                                                        Source="{Binding Resim, Converter={StaticResource ByteArrayToImageSource}}"
+                                                        Visibility="{Binding Resim, Converter={StaticResource NullVisibilityConverter}}">
+                                                        <Image.ContextMenu>
+                                                            <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                                                <MenuItem
+                                                                    Header="RESİM KAYDET"
+                                                                    Command="{Binding ResimKaydet}"
+                                                                    CommandParameter="{Binding Resim}" />
+                                                            </ContextMenu>
+                                                        </Image.ContextMenu>
+                                                        <Image.ToolTip>
+                                                            <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                <Image
+                                                                    Width="512"
+                                                                    Height="384"
+                                                                    ice:Freeze="True"
+                                                                    Source="{Binding Source}" />
+                                                            </ToolTip>
+                                                        </Image.ToolTip>
+                                                    </Image>
+                                                    <TextBlock Text="{Binding UrunAdi}" VerticalAlignment="Center" />
+                                                    <TextBlock
+                                                        Text="{Binding SatisFiyat, StringFormat=' \{0:C\}'}"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Green" />
+                                                    <TextBlock
+                                                        Text="{Binding KalanMiktar, StringFormat=' Stokta \{0\} '}"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Red" />
+                                                    <TextBlock
+                                                        Text="{Binding OlcuBirimi, StringFormat=\{0\} Kaldı}"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Red" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock Text="Tahsilat Tarihi" Grid.Row="3" />
+                                    <xctk:DateTimePicker
+                                        x:Name="DtTahsilatTarihi"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        IsEnabled="False">
+                                        <xctk:DateTimePicker.Value>
+                                            <Binding
+                                                Path="Saat"
+                                                TargetNullValue="{x:Static system:DateTime.Now}"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:TarihDoğrula ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </xctk:DateTimePicker.Value>
+                                    </xctk:DateTimePicker>
+                                    <TextBlock Text="{Binding SelectedItem.OlcuBirimi, ElementName=CbÜrün, StringFormat=Kaç \{0\} Alacak}" Grid.Row="4" />
+                                    <TextBox
+                                        x:Name="TxAdet"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbÜrün}">
+                                        <Binding
+                                            Path="Adet"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:SıfırdanBüyük ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <Button
+                                        x:Name="BtOnayla"
+                                        Grid.Row="5"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding Giriş}"
+                                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbÜrün}">
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedItem.KalanMiktar, ElementName=CbÜrün}" Value="0">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="24"
+                                                HorizontalAlignment="Center"
+                                                Source="icons/shell32_16802.png" />
+                                            <AccessText
+                                                Text="_ONAYLA"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </AdornerDecorator>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbTahsilatlar"
+                        Header="TAHSİLATLAR"
+                        Grid.Column="1"
+                        Margin="2,0,0,2"
+                        IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=CbÜrün}"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Tahsilatlar />
+                        </GroupBox.DataContext>
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Toplam Tutar" Grid.Row="0" />
+                                    <xctk:DoubleUpDown
+                                        x:Name="DuDToplamTutar"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        FormatString="C"
+                                        Increment="0.25"
+                                        Watermark="Tutar Girin">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="ValueChanged">
+                                                <i:InvokeCommandAction Command="{Binding DoubleUpDownDeğişti}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <xctk:DoubleUpDown.Value>
+                                            <Binding
+                                                Path="ToplamTutar"
+                                                UpdateSourceTrigger="PropertyChanged"
+                                                ValidatesOnDataErrors="True">
+                                                <Binding.ValidationRules>
+                                                    <local:SıfırdanBüyük ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </xctk:DoubleUpDown.Value>
+                                    </xctk:DoubleUpDown>
+                                    <TextBlock Text="Peşin Ödenen Tutar" Grid.Row="1" />
+                                    <xctk:DoubleUpDown
+                                        x:Name="DudPeşinÖdenen"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FormatString="C"
+                                        Increment="0.25"
+                                        Maximum="{Binding Value, ElementName=DuDToplamTutar, UpdateSourceTrigger=PropertyChanged}"
+                                        Minimum="0"
+                                        Watermark="Tutar Girin">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="ValueChanged">
+                                                <i:InvokeCommandAction Command="{Binding DoubleUpDownDeğişti}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <xctk:DoubleUpDown.Value>
+                                            <Binding
+                                                Path="PesinOdenen"
+                                                UpdateSourceTrigger="PropertyChanged"
+                                                ValidatesOnDataErrors="True">
+                                                <Binding.ValidationRules>
+                                                    <local:SıfırDahilSıfırdandanBüyük ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </xctk:DoubleUpDown.Value>
+                                    </xctk:DoubleUpDown>
+                                    <TextBlock Text="Kalan" Grid.Row="2" />
+                                    <TextBox
+                                        Text="{Binding Kalan, StringFormat=C, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        IsEnabled="False">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding FaizHesap}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <TextBlock
+                                        Text="Açıklama"
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,4,0,5"
+                                        HorizontalAlignment="Center" />
+                                    <TextBox
+                                        x:Name="TxAçıklama"
+                                        Text="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                                        Grid.Row="4"
+                                        Grid.RowSpan="2"
+                                        Grid.ColumnSpan="2"
+                                        VerticalContentAlignment="Top"
+                                        CharacterCasing="Upper"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Ödeme Tipi" />
+                                    <ComboBox
+                                        x:Name="CbÖdemeTipi"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        SelectedIndex="0">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding ComboboxTahsilatDeğişti}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <ComboBoxItem Content="PEŞİN" />
+                                        <ComboBoxItem Content="TAKSİTLİ" />
+                                    </ComboBox>
+                                    <TextBlock Text="Taksit Sayısı" Grid.Row="1" />
+                                    <TextBox
+                                        x:Name="TxTaksit"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        IsEnabled="False">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding FaizHesap}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Binding Path="TaksitSayisi" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:SıfırDahilSıfırdandanBüyük ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock Text="Faiz Oranı %" Grid.Row="2" />
+                                    <TextBox
+                                        x:Name="TxFaiz"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        IsEnabled="False">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding FaizHesap}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <Binding Path="FaizOrani" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:SıfırBirArası Enaz="0" Ençok="100" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock Text="Vade Başlangıç Tarihi" Grid.Row="3" />
+                                    <DatePicker
+                                        x:Name="DtVadeTarihi"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        DisplayDateStart="{x:Static system:DateTime.Now}"
+                                        IsEnabled="False"
+                                        SelectedDate="{Binding VadeBaşlangıçTarihi, TargetNullValue={x:Static system:DateTime.Now}, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Text="Ödeme Aralığı (Ay)" Grid.Row="4" />
+                                    <xctk:IntegerUpDown
+                                        x:Name="IuPÖdemeAralığı"
+                                        Text="1"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        AllowTextInput="False"
+                                        IsEnabled="False"
+                                        Minimum="1" />
+                                    <TextBlock Text="Taksit Tutarı" Grid.Row="5" />
+                                    <TextBox
+                                        x:Name="TxTaksitTutarı"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        IsEnabled="False" />
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbSatışEkranı"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,2,0,0"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Satış />
+                        </GroupBox.DataContext>
+                        <GroupBox.Header>
+                            <UniformGrid Columns="7" Rows="2">
+                                <TextBlock Text="BAŞLANGIÇ" />
+                                <DatePicker
+                                    x:Name="DtBaşlangıç"
+                                    DisplayDateEnd="{x:Static system:DateTime.Now}"
+                                    DisplayDateStart="01/01/1753"
+                                    Focusable="False"
+                                    SelectedDate="{Binding Başlangıç, TargetNullValue={x:Static system:DateTime.Now}, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDateFormat="Short" />
+                                <TextBlock Text="TOPLAM TUTAR" />
+                                <TextBlock x:Name="TbToplam" Foreground="Purple" />
+                                <TextBlock Text="TOPLAM PEŞİN TUTAR" />
+                                <TextBlock x:Name="TbToplamPeşinÖdenen" Foreground="Purple" />
+                                <xctk:WatermarkTextBox
+                                    Text="{Binding Filtre, UpdateSourceTrigger=PropertyChanged}"
+                                    VerticalContentAlignment="Center"
+                                    AutoSelectBehavior="OnFocus"
+                                    CharacterCasing="Upper"
+                                    IsEnabled="{Binding SelectedItem, Converter={StaticResource ObjectToBoolConverter}, ElementName=WmCbSatışKriter}"
+                                    Watermark="Arama Metnini Girin." />
+                                <TextBlock Text="BİTİŞ" />
+                                <DatePicker
+                                    x:Name="DtBitiş"
+                                    DisplayDateEnd="{x:Static system:DateTime.Now}"
+                                    DisplayDateStart="01/01/1753"
+                                    Focusable="False"
+                                    SelectedDate="{Binding Bitiş, TargetNullValue={x:Static system:DateTime.Now}, UpdateSourceTrigger=PropertyChanged}"
+                                    SelectedDateFormat="Short" />
+                                <TextBlock Text="TOPLAM ALINAN MİKTAR" />
+                                <TextBlock x:Name="TbToplamAdet" Foreground="Purple" />
+                                <TextBlock Text="TOPLAM TAKSİT TUTAR" />
+                                <TextBlock x:Name="TbToplamTaksitÖdenen" Foreground="Purple" />
+                                <xctk:WatermarkComboBox
+                                    x:Name="WmCbSatışKriter"
+                                    Height="24"
+                                    VerticalContentAlignment="Center"
+                                    DisplayMemberPath="Header"
+                                    ItemsSource="{Binding Columns, ElementName=DgSatışlar}"
+                                    SelectedItem="{Binding SatışKriter, UpdateSourceTrigger=PropertyChanged}"
+                                    Watermark="Kriter Seçin." />
+                            </UniformGrid>
+                        </GroupBox.Header>
+                        <xctk:BusyIndicator x:Name="BusyIndicator" BusyContent="İşlem Sürüyor Bekleyin...">
+                            <DataGrid
+                                x:Name="DgSatışlar"
+                                Grid.ColumnSpan="1"
+                                AlternatingRowBackground="NavajoWhite"
+                                AutoGenerateColumns="False"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                CanUserResizeRows="False"
+                                FrozenColumnCount="2"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding Cv, IsAsync=True}"
+                                SelectionMode="Extended"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                <!--<DataGrid.Style>
+                                    <Style TargetType="DataGrid">
+                                        <Setter Property="AlternatingRowBackground" Value="NavajoWhite" />
+                                    </Style>
+                                </DataGrid.Style>-->
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="ToolTip">
+                                            <Setter.Value>
+                                                <Image
+                                                    Width="160"
+                                                    Height="160"
+                                                    RenderOptions.BitmapScalingMode="LowQuality"
+                                                    RenderOptions.CachingHint="Cache"
+                                                    Source="{Binding Musteriler.Resim, Converter={StaticResource ByteArrayToImageSource}, Mode=OneWay}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                                    <Condition Binding="{Binding Path=Musteriler.Resim.Length}" Value="{x:Null}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                            </MultiDataTrigger>
+                                            <!--<DataTrigger Binding="{Binding PesinMi}" Value="true">
+                                                <Setter Property="Background" Value="LightGreen" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding PesinMi}" Value="false">
+                                                <Setter Property="Background" Value="Orange" />
+                                            </DataTrigger>-->
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.RowHeaderTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}}" />
+                                    </DataTemplate>
+                                </DataGrid.RowHeaderTemplate>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Musteriler.Adi}" Header="ADI" />
+                                    <DataGridTextColumn Binding="{Binding Musteriler.Soyadi}" Header="SOYADI" />
+                                    <DataGridTextColumn Binding="{Binding Musteriler.Tc}" Header="TC&#xA;KİMLİK&#xA;NO" />
+                                    <DataGridTextColumn Binding="{Binding Musteriler.Telefon}" Header="TELEFON" />
+                                    <DataGridTextColumn Binding="{Binding Adet}" Header="ALDIĞI&#xA;MİKTAR" />
+                                    <DataGridTextColumn Binding="{Binding Urunler.UrunAdi}" Header="ÜRÜN&#xA;ADI" />
+                                    <DataGridCheckBoxColumn
+                                        Binding="{Binding PesinMi}"
+                                        Header="PEŞİN&#xA;Mİ"
+                                        IsThreeState="False" />
+                                    <DataGridTextColumn Binding="{Binding Tahsilatlar/ToplamTutar, StringFormat=\{0:C\}}" Header="TOPLAM&#xA;TUTAR" />
+                                    <DataGridTextColumn Binding="{Binding Tahsilatlar/PesinOdenen, StringFormat=\{0:C\}}" Header="PEŞİN&#xA;ÖDENEN&#xA;TUTAR" />
+                                    <DataGridTextColumn Binding="{Binding TaksitToplam, StringFormat=\{0:C\}}" Header="TOPLAM&#xA;ÖDENEN&#xA;TAKSİT&#xA;TUTARI" />
+                                    <DataGridTextColumn Binding="{Binding TahsilatTarih}">
+                                        <DataGridTextColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel DataContext="{Binding DataContext, ElementName=DgSatışlar}">
+                                                    <TextBlock Text="TAHSİLAT TARİHİ" />
+                                                    <RadioButton
+                                                        Content="TAKSİTLİ OLAN"
+                                                        GroupName="Filtreler"
+                                                        Style="{StaticResource {x:Type ToggleButton}}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding ButtonFiltreler}" CommandParameter="4" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </RadioButton>
+                                                    <RadioButton
+                                                        Content="TAKSİTİ YAKLAŞAN"
+                                                        GroupName="Filtreler"
+                                                        Style="{StaticResource {x:Type ToggleButton}}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding ButtonFiltreler}" CommandParameter="0" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </RadioButton>
+                                                    <RadioButton
+                                                        Content="TAKSİTİ GEÇEN"
+                                                        GroupName="Filtreler"
+                                                        Style="{StaticResource {x:Type ToggleButton}}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding ButtonFiltreler}" CommandParameter="1" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </RadioButton>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTextColumn.HeaderTemplate>
+                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <xctk:DropDownButton Content="HESAP&#xA;MAKİNESİ">
+                                                        <xctk:DropDownButton.DropDownContent>
+                                                            <StackPanel>
+                                                                <xctk:Calculator />
+                                                                <DataGrid
+                                                                    Height="120"
+                                                                    AlternatingRowBackground="NavajoWhite"
+                                                                    AutoGenerateColumns="False"
+                                                                    DataContext="{DynamicResource Döviz}"
+                                                                    IsReadOnly="True"
+                                                                    ItemsSource="{Binding XPath=/Tarih_Date/Currency}"
+                                                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                                                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                                                    <DataGrid.Resources>
+                                                                        <XmlDataProvider
+                                                                            x:Key="Döviz"
+                                                                            IsAsynchronous="True"
+                                                                            IsInitialLoadEnabled="True"
+                                                                            Source="http://www.tcmb.gov.tr/kurlar/today.xml" />
+                                                                    </DataGrid.Resources>
+                                                                    <DataGrid.Columns>
+                                                                        <DataGridTextColumn
+                                                                            Binding="{Binding XPath=Isim}"
+                                                                            Header="DÖVİZ"
+                                                                            Width="150" />
+                                                                        <DataGridTextColumn Binding="{Binding XPath=BanknoteBuying}" Header="ALIŞ" />
+                                                                        <DataGridTextColumn Binding="{Binding XPath=BanknoteSelling}" Header="SATIŞ" />
+                                                                    </DataGrid.Columns>
+                                                                </DataGrid>
+                                                            </StackPanel>
+                                                        </xctk:DropDownButton.DropDownContent>
+                                                    </xctk:DropDownButton>
+                                                    <xctk:DropDownButton Content="GRAFİKLER" DataContext="{Binding DataContext, ElementName=DgSatışlar}">
+                                                        <xctk:DropDownButton.DropDownContent>
+                                                            <StackPanel>
+                                                                <Button Command="{Binding GünlükGrafikRaporAl}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Image Width="24" Source="icons/6.png" />
+                                                                        <TextBlock Text="GÜNLÜK SATIŞ GRAFİK" />
+                                                                    </StackPanel>
+                                                                </Button>
+                                                                <Button Command="{Binding AylıkGrafikRaporAl}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Image Width="24" Source="icons/6.png" />
+                                                                        <TextBlock Text="AYLIK SATIŞ GRAFİK" />
+                                                                    </StackPanel>
+                                                                </Button>
+                                                                <Button Command="{Binding YıllıkGrafikRaporAl}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Image Width="24" Source="icons/6.png" />
+                                                                        <TextBlock Text="YILLIK SATIŞ GRAFİK" />
+                                                                    </StackPanel>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </xctk:DropDownButton.DropDownContent>
+                                                    </xctk:DropDownButton>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Command="{Binding DataContext.ListeSilme, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                                    CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                                                    IsEnabled="{Binding TahsilatTarih, Converter={StaticResource İadeGünGeçtiMiConverter}}"
+                                                    ToolTipService.ShowOnDisabled="True">
+                                                    <Button.Style>
+                                                        <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type Button}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="ToolTip">
+                                                                        <Setter.Value>
+                                                                            <TextBlock Text="Üzerinden Bir Günden Fazla Geçmiş Satışı İptal Edemezsin İadeler Menüsünü Kullanın." Foreground="Red" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image
+                                                            Width="16"
+                                                            HorizontalAlignment="Center"
+                                                            ice:Freeze="True"
+                                                            Source="icons/shell32_240.png" />
+                                                        <AccessText
+                                                            Text="_İPTAL"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Content="TÜM&#xA;TAKSİTLİ&#xA;SATIŞLARA&#xA;RAPOR AL"
+                                                    Command="{Binding TaksitRaporAl}"
+                                                    DataContext="{Binding DataContext, ElementName=DgSatışlar}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Content="TAKSİTLER"
+                                                    Command="{Binding DataContext.TaksitGör, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                                    CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                                                    IsEnabled="{Binding PesinMi, Converter={StaticResource NegateBooleanConverter}}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <UniformGrid
+                                                    Columns="1"
+                                                    DataContext="{Binding DataContext, ElementName=DgSatışlar}"
+                                                    Rows="2">
+                                                    <RadioButton
+                                                        Content="İŞLEMİ&#xA;BİTEN"
+                                                        GroupName="Filtreler"
+                                                        Style="{StaticResource {x:Type ToggleButton}}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding ButtonFiltreler}" CommandParameter="2" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </RadioButton>
+                                                    <RadioButton
+                                                        Content="BUGÜN"
+                                                        GroupName="Filtreler"
+                                                        IsChecked="True"
+                                                        Style="{StaticResource {x:Type ToggleButton}}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding ButtonFiltreler}" CommandParameter="5" />
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </RadioButton>
+                                                </UniformGrid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.HeaderTemplate>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <ProgressBar x:Name="PbSatışlar" Style="{StaticResource SatışProgressBarStyle}">
+                                                        <ProgressBar.Value>
+                                                            <MultiBinding Converter="{StaticResource ProgressValueConverter}">
+                                                                <Binding Mode="OneWay" Path="TaksitToplam" />
+                                                                <Binding Mode="OneWay" Path="Tahsilatlar/PesinOdenen" />
+                                                                <Binding Mode="OneWay" Path="Tahsilatlar/ToplamTutar" />
+                                                            </MultiBinding>
+                                                        </ProgressBar.Value>
+                                                    </ProgressBar>
+                                                    <TextBlock
+                                                        Text="{Binding Value, ElementName=PbSatışlar, StringFormat=%\{0:0\}}"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center" />
+                                                    <!--<StackPanel Orientation="Horizontal">
+                                                    <Rectangle Width="51" Fill="{Binding Path=SatisID, ConverterParameter=1, Converter={StaticResource TaksitRectangleConverter}}" />
+                                                    <Rectangle Width="51" Fill="{Binding Path=SatisID, ConverterParameter=2, Converter={StaticResource TaksitRectangleConverter}}" />
+                                                    <Rectangle Width="51" Fill="{Binding Path=SatisID, ConverterParameter=3, Converter={StaticResource TaksitRectangleConverter}}" />
+                                                    <Rectangle Width="51" Fill="{Binding Path=SatisID, ConverterParameter=4, Converter={StaticResource TaksitRectangleConverter}}" />
+                                                </StackPanel>-->
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ToplamAl}" CommandParameter="{Binding SelectedItems, ElementName=DgSatışlar}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <!--<DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Musteriler.Adres, UpdateSourceTrigger=PropertyChanged, StringFormat=' ADRES: \{0\}'}" />
+                                                            <TextBlock Text="{Binding Tahsilatlar/Aciklama, UpdateSourceTrigger=PropertyChanged, StringFormat=' AÇIKLAMA: \{0\}'}" />
+                                                        </StackPanel>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>-->
+                            </DataGrid>
+                        </xctk:BusyIndicator>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="MÜŞTERİLER VE İADELER">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="49*" />
+                        <ColumnDefinition Width="52*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" MinHeight="218" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <GroupBox
+                        x:Name="GbMüşeriGirişi"
+                        Header="MÜŞTERİ GİRİŞİ"
+                        Grid.Column="0"
+                        Margin="0,0,2,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:Musteriler />
+                        </GroupBox.DataContext>
+                        <AdornerDecorator>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid x:Name="Gd1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Adı" />
+                                    <TextBox
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="Adi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock Text="Soyadı" Grid.Row="1" />
+                                    <TextBox
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="Soyadi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock Text="TC" Grid.Row="2" />
+                                    <TextBox
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        MaxLength="11">
+                                        <Binding
+                                            Path="Tc"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TcKimlikDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <TextBlock Text="Telefon" Grid.Row="3" />
+                                    <xctk:MaskedTextBox
+                                        Text="{Binding Telefon}"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper"
+                                        Mask="(000) 000 00 00">
+                                        <xctk:MaskedTextBox.Style>
+                                            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}" />
+                                        </xctk:MaskedTextBox.Style>
+                                    </xctk:MaskedTextBox>
+                                    <TextBlock Text="E Posta" Grid.Row="4" />
+                                    <TextBox
+                                        Text="{Binding Eposta, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                        Grid.Row="4"
+                                        Grid.Column="1" />
+                                    <TextBlock
+                                        Text="Yaş"
+                                        Grid.Row="5"
+                                        Grid.Column="0" />
+                                    <TextBox
+                                        Text="{Binding Yas, TargetNullValue=''}"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper" />
+                                    <TextBlock Text="Adres" Grid.Row="6" />
+                                    <TextBox
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding
+                                            Path="Adres"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                </Grid>
+                                <Grid x:Name="Gd2" Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="1*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Açıklama" Grid.Row="0" />
+                                    <TextBox
+                                        Text="{Binding Aciklama}"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="5"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Top"
+                                        CharacterCasing="Upper"
+                                        TextWrapping="Wrap" />
+                                    <Button
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        Command="{Binding Ekle}"
+                                        CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="24"
+                                                HorizontalAlignment="Center"
+                                                Source="icons/shell32_16802.png" />
+                                            <AccessText
+                                                Text="_MÜŞTERİYİ EKLE"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button
+                                        Content="WEBCAM"
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        Command="{Binding WebcamGöster}"
+                                        CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                                        IsTabStop="False" />
+                                </Grid>
+                            </Grid>
+                        </AdornerDecorator>
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0,2,2,0"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:MüşteriArama />
+                        </GroupBox.DataContext>
+                        <GroupBox.Header>
+                            <UniformGrid Columns="3" Rows="1">
+                                <TextBlock Text="MÜŞTERİLER" />
+                                <xctk:WatermarkTextBox
+                                    Text="{Binding MüsteriFiltre, UpdateSourceTrigger=PropertyChanged}"
+                                    VerticalContentAlignment="Center"
+                                    AutoSelectBehavior="OnFocus"
+                                    CharacterCasing="Upper"
+                                    Watermark="Arama Yapmak İçin Müşteri Adını Yazın." />
+                                <Button Command="{Binding MüşteriRaporAl}" IsEnabled="{Binding Items.IsEmpty, Converter={StaticResource NegateBooleanConverter}, ElementName=DgMüşteriler}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            Source="icons/6.png" />
+                                        <AccessText
+                                            Text="MÜŞ_TERİLERE RAPOR AL"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </UniformGrid>
+                        </GroupBox.Header>
+                        <DataGrid
+                            x:Name="DgMüşteriler"
+                            AlternatingRowBackground="NavajoWhite"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            ItemsSource="{Binding ObservableCollectionMüşteriler}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ADI" EditingElementStyle="{StaticResource DataGridTextBoxUpper}">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Path="Adi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="SOYADI" EditingElementStyle="{StaticResource DataGridTextBoxUpper}">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Path="Soyadi"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn
+                                    Header="TC KİMLİK"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}"
+                                    IsReadOnly="True">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Path="Tc"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TcKimlikDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTemplateColumn Header="TELEFON">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <xctk:MaskedTextBox
+                                                Text="{Binding Telefon, UpdateSourceTrigger=PropertyChanged}"
+                                                CharacterCasing="Upper"
+                                                Mask="(000) 000 00 00">
+                                                <xctk:MaskedTextBox.Style>
+                                                    <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}" />
+                                                </xctk:MaskedTextBox.Style>
+                                            </xctk:MaskedTextBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Binding="{Binding Yas, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="YAŞ"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn Header="ADRES" EditingElementStyle="{StaticResource DataGridTextBoxUpper}">
+                                    <DataGridTextColumn.Binding>
+                                        <Binding
+                                            Path="Adres"
+                                            UpdateSourceTrigger="PropertyChanged"
+                                            ValidatesOnDataErrors="True">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </DataGridTextColumn.Binding>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn
+                                    Binding="{Binding Eposta, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="E POSTA"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding Güncelle}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Width="16"
+                                                        HorizontalAlignment="Center"
+                                                        ice:Freeze="True"
+                                                        Source="icons/update.png" />
+                                                    <AccessText
+                                                        Text="_GÜNCELLE"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <Image
+                                                Width="48"
+                                                Height="48"
+                                                DataContext="{Binding DataContext, ElementName=DgMüşteriler}"
+                                                RenderOptions.BitmapScalingMode="LowQuality"
+                                                RenderOptions.CachingHint="Cache"
+                                                Source="{Binding SelectedItem.Resim, Converter={StaticResource ByteArrayToImageSource}, IsAsync=True, ElementName=DgMüşteriler}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding ResimKaydet}" CommandParameter="{Binding SelectedItem.Resim, ElementName=DgMüşteriler}" />
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseRightButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding ResimSil}" CommandParameter="{Binding SelectedItem, ElementName=DgMüşteriler}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                                <Image.ToolTip>
+                                                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                        <Image
+                                                            Width="512"
+                                                            Height="384"
+                                                            ice:Freeze="True"
+                                                            Source="{Binding Source}" />
+                                                    </ToolTip>
+                                                </Image.ToolTip>
+                                            </Image>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.HeaderTemplate>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding MüşteriResim}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource Self}}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Width="16"
+                                                        HorizontalAlignment="Center"
+                                                        ice:Freeze="True"
+                                                        Source="Icons/imageres_72.png" />
+                                                    <AccessText
+                                                        Text="RESİ_M"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Binding="{Binding Aciklama, UpdateSourceTrigger=PropertyChanged}"
+                                    Header="AÇIKLAMA"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                            </DataGrid.Columns>
+                            <DataGrid.DataContext>
+                                <local:Satış />
+                            </DataGrid.DataContext>
+                        </DataGrid>
+                    </GroupBox>
+                    <GroupBox
+                        x:Name="GbMüşteriİade"
+                        Header="MÜŞTERİ İADELER"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2,0,0,2"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.DataContext>
+                            <local:MusteriIadeler />
+                        </GroupBox.DataContext>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <AdornerDecorator>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="172" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                        <RowDefinition Height="22*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Müşteri" Height="16" />
+                                    <ComboBox
+                                        x:Name="CbMüşteriİade"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Stretch"
+                                        IsTextSearchEnabled="True"
+                                        ItemsSource="{Binding ObservableCollectionMüşteriler, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding SeçiliMüşteri, UpdateSourceTrigger=PropertyChanged}"
+                                        TextSearch.TextPath="Adi">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                    <Image
+                                                        Width="48"
+                                                        Height="48"
+                                                        HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                                        RenderOptions.CachingHint="Cache"
+                                                        Source="{Binding Resim, Converter={StaticResource ByteArrayToImageSource}}"
+                                                        Visibility="{Binding Resim, Converter={StaticResource NullVisibilityConverter}}">
+                                                        <Image.OpacityMask>
+                                                            <VisualBrush>
+                                                                <VisualBrush.Visual>
+                                                                    <Border
+                                                                        Name="Mask"
+                                                                        BorderBrush="#FF3B5998"
+                                                                        BorderThickness="1"
+                                                                        CornerRadius="0.2" />
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Image.OpacityMask>
+                                                        <Image.ToolTip>
+                                                            <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                                                <Image
+                                                                    Width="512"
+                                                                    Height="384"
+                                                                    ice:Freeze="True"
+                                                                    Source="{Binding Source}" />
+                                                            </ToolTip>
+                                                        </Image.ToolTip>
+                                                    </Image>
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Adi}" VerticalAlignment="Center" />
+                                                            <TextBlock Text="{Binding Soyadi, StringFormat=' \{0\}'}" VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Text="{Binding Tc, StringFormat=Tc: \{0\}}"
+                                                                FontStyle="Italic"
+                                                                Foreground="DarkBlue" />
+                                                            <TextBlock
+                                                                Text="{Binding Telefon, StringFormat=' Telefon: \{0\}'}"
+                                                                FontStyle="Italic"
+                                                                Foreground="Blue" />
+                                                            <TextBlock
+                                                                Text="{Binding Eposta, StringFormat=' E Posta: \{0\}'}"
+                                                                FontStyle="Italic"
+                                                                Foreground="Purple" />
+                                                        </StackPanel>
+                                                        <TextBlock
+                                                            Text="{Binding Adres, StringFormat=Adres: \{0\}}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="Red" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock
+                                        Text="Ürün"
+                                        Grid.Row="1"
+                                        Height="16" />
+                                    <ComboBox
+                                        x:Name="CbÜrünİade"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        VerticalContentAlignment="Center"
+                                        IsTextSearchEnabled="True"
+                                        ItemsSource="{Binding FilteredSatışlar}"
+                                        TextSearch.TextPath="Urunler.UrunAdi">
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ComboBoxItem}">
+                                                <Setter Property="IsEnabled" Value="True" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TahsilatTarih, Converter={StaticResource İadeGünGeçtiMiConverter}}" Value="true">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                        <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                                        <Setter Property="ToolTip">
+                                                            <Setter.Value>
+                                                                <TextBlock Text="Satış Bugün Yapıldığından Satışlar Sekmesini Kullanarak Satışı İptal Edin." Foreground="Red" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <!--<Grid>-->
+                                                <!--<ProgressBar Style="{StaticResource ProgressBarStyle}">
+                                                        <ProgressBar.Value>
+                                                            <MultiBinding Converter="{StaticResource ProgressValueConverter}">
+                                                                <Binding Path="TaksitToplam" />
+                                                                <Binding Path="Tahsilatlar/PesinOdenen" />
+                                                                <Binding Path="Tahsilatlar/ToplamTutar" />
+                                                            </MultiBinding>
+                                                        </ProgressBar.Value>
+                                                    </ProgressBar>-->
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Text="{Binding TahsilatTarih, StringFormat='\{0:d\} Tarihinde '}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="Chocolate" />
+                                                        <TextBlock
+                                                            Text="{Binding Adet, StringFormat='\{0\} '}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="Red" />
+                                                        <TextBlock
+                                                            Text="{Binding Urunler.OlcuBirimi, StringFormat='\{0\} '}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="Red" />
+                                                        <TextBlock Text="{Binding Urunler.UrunAdi, StringFormat=\{0\} Aldı}" VerticalAlignment="Center" />
+                                                        <CheckBox
+                                                            Content="(√=Peşin)"
+                                                            IsChecked="{Binding PesinMi}"
+                                                            IsEnabled="False" />
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Text="{Binding Tahsilatlar/ToplamTutar, StringFormat=' Satılan Ürün Toplam \{0:c\} Olup'}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="DarkSlateBlue" />
+                                                        <TextBlock
+                                                            Text="{Binding Tahsilatlar/PesinOdenen, StringFormat=' \{0:c\} Peşin Ödedi'}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="MediumAquamarine" />
+                                                        <TextBlock
+                                                            Text="{Binding TaksitToplam, StringFormat=' \{0:c\} Taksit Ödedi'}"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="OrangeRed" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                                <!--</Grid>-->
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock
+                                        Text="İade Adeti"
+                                        Grid.Row="2"
+                                        Height="16" />
+                                    <xctk:IntegerUpDown
+                                        x:Name="IudMüşteriİadeAdeti"
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        IsEnabled="False"
+                                        Maximum="{Binding SelectedItem.Adet, ElementName=CbÜrünİade}"
+                                        Minimum="1"
+                                        Value="{Binding SelectedItem.Adet, ElementName=CbÜrünİade}" />
+                                    <TextBlock
+                                        Text="Müşteriye Geri Ödenecek Tutar"
+                                        Grid.Row="3"
+                                        Height="16" />
+                                    <xctk:CalculatorUpDown
+                                        x:Name="CuDMüşteriÖdenecekTutar"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        FormatString="C"
+                                        Minimum="0"
+                                        Value="{Binding SelectedItem.TümToplam, ElementName=CbÜrünİade, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock
+                                        Text="İade Tarihi"
+                                        Grid.Row="4"
+                                        Height="16" />
+                                    <DatePicker
+                                        x:Name="DtİadeTarihi"
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        DisplayDateEnd="{x:Static system:DateTime.Now}"
+                                        DisplayDateStart="01/01/1753">
+                                        <DatePicker.SelectedDate>
+                                            <Binding
+                                                Path="IadeTarihi"
+                                                TargetNullValue="{x:Static system:DateTime.Now}"
+                                                UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <local:TarihDoğrula ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </DatePicker.SelectedDate>
+                                    </DatePicker>
+                                    <TextBlock
+                                        Text="Açıklama"
+                                        Grid.Row="5"
+                                        Height="16" />
+                                    <TextBox
+                                        x:Name="TxİadeAçıklama"
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        CharacterCasing="Upper">
+                                        <Binding Path="Aciklama" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:TxtDoğrula ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox>
+                                    <Button
+                                        Grid.Row="6"
+                                        Grid.ColumnSpan="2"
+                                        Command="{Binding MüşteriİadeEkleme}">
+                                        <Button.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                                <Binding ElementName="CbMüşteriİade" Path="SelectedItem" />
+                                                <Binding ElementName="CbÜrünİade" Path="SelectedItem" />
+                                            </MultiBinding>
+                                        </Button.IsEnabled>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="24"
+                                                HorizontalAlignment="Center"
+                                                Source="icons/shell32_16802.png" />
+                                            <AccessText
+                                                Text="MÜŞTERİ İADE _ONAYLA"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </AdornerDecorator>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="2,2,0,0"
+                        Template="{StaticResource TintedGroupBox}">
+                        <GroupBox.Header>
+                            <UniformGrid Columns="3" Rows="1">
+                                <TextBlock Text="MÜŞTERİ İADELER" />
+                                <xctk:WatermarkTextBox
+                                    Text="{Binding MüsteriIadeFiltre, UpdateSourceTrigger=PropertyChanged}"
+                                    VerticalContentAlignment="Center"
+                                    AutoSelectBehavior="OnFocus"
+                                    CharacterCasing="Upper"
+                                    Watermark="Arama Yapmak İçin Müşteri Adını Yazın." />
+                                <Button Command="{Binding MüşteriİadeRaporAl}" IsEnabled="{Binding Items.IsEmpty, Converter={StaticResource NegateBooleanConverter}, ElementName=Dgİadeler}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image
+                                            Width="24"
+                                            HorizontalAlignment="Center"
+                                            Source="icons/6.png" />
+                                        <AccessText
+                                            Text="İA_DELERE RAPOR AL"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                            </UniformGrid>
+                        </GroupBox.Header>
+                        <GroupBox.DataContext>
+                            <local:MusteriIadeler />
+                        </GroupBox.DataContext>
+                        <DataGrid
+                            x:Name="Dgİadeler"
+                            AlternatingRowBackground="NavajoWhite"
+                            AutoGenerateColumns="False"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding ObservableCollectionMüşteriİadeler}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding Musteriler.Adi}"
+                                    Header="ADI"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Musteriler.Soyadi}"
+                                    Header="SOYADI"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Urunler.UrunAdi}"
+                                    Header="GERİ&#xA;ALINAN&#xA;ÜRÜN"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding IadeAdeti}"
+                                    Header="İADE&#xA;ADETİ"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding OdenenTutar, StringFormat=\{0:C\}}"
+                                    Header="MÜŞTERİYE&#xA;GERİ ÖDENEN&#xA;TUTAR"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding IadeTarihi, StringFormat=\{0:d\}}"
+                                    Header="İADE&#xA;TARİHİ"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                                <DataGridTextColumn
+                                    Binding="{Binding Aciklama}"
+                                    Header="AÇIKLAMA"
+                                    EditingElementStyle="{StaticResource DataGridTextBoxUpper}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

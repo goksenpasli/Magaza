@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database Name="data" EntityNamespace="Magaza" ContextNamespace="Magaza" Class="DataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="73ff0a93-dade-4a28-bd96-4f25d7ec5215" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="ConnectionString" ConnectionString="Data Source=&quot;C:\Users\goksem\Documents\Expression\Blend 4\Projects\Magaza\Magaza\bin\Debug\data.sdf&quot;;Max Database Size=4091" Provider="System.Data.SqlServerCe.3.5" />
+  <Table Name="MusteriIadeler" Member="MusteriIadeler">
+    <Type Name="MusteriIadeler" ed:Guid="3c1d55a8-9b97-40fb-ab38-262b5fbb9bc0">
+      <Column Name="MusteriIadeID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="27889969-ece2-46f1-8737-ba99610d7609" />
+      <Column Name="IadeTarihi" Type="System.DateTime" DbType="DATETIME" CanBeNull="true" UpdateCheck="Always" Precision="23" ed:ValidateRequired="false" ed:Guid="5ee7c9e3-1abc-4f99-a9b1-630661bf70f7" />
+      <Column Name="MusteriID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="3ce9c8b3-938f-4be3-b4b1-e80ae097dcdb" />
+      <Column Name="UrunID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="456f3c2e-46dc-4256-872b-0d36eca4a17b" />
+      <Column Name="IadeAdeti" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="94889147-3997-4d22-8981-fa86099dbec0" />
+      <Column Name="OdenenTutar" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="42035ddc-6c35-4e6c-ad79-3aad2801704c" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="4560ff37-12dd-4420-9943-e86cccb3c43b" />
+      <Column Name="SatisID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="a8c800b9-974e-48d9-b016-4add01e21e68" />
+      <Association Name="Musteriler_MusteriIadeler" ed:AssociationGuid="8715668d-5d44-447f-b037-e58ff8b2db8f" Member="Musteriler" ed:Guid="861d13f7-a176-49ac-b69d-3dc801dbb08b" ThisKey="MusteriID" OtherKey="MusteriID" Type="Musteriler" DeleteRule="NO ACTION" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="Urunler_MusteriIadeler" ed:AssociationGuid="6df1758b-7b96-41b6-b31c-a37eed1b6723" Member="Urunler" ed:Guid="55d58f8a-7163-45b8-9512-4d04d4b7a926" ThisKey="UrunID" OtherKey="UrunID" Type="Urunler" DeleteRule="NO ACTION" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="Satislar_MusteriIadeler" ed:AssociationGuid="c10af0f4-54ce-4545-8a01-6544721b045a" Member="Satislar" ed:Guid="a74d75f4-e338-452f-aad9-19ee94896d1e" ThisKey="SatisID" OtherKey="SatisID" Type="Satislar" DeleteRule="CASCADE" DeleteOnNull="true" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Musteriler" Member="Musteriler">
+    <Type Name="Musteriler" ed:Guid="ceeb8d1a-5413-486d-b72c-c24824851c66">
+      <Column Name="MusteriID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="afae9268-2cd2-45e3-9d18-51d3c18f2a65" />
+      <Column Name="Adi" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="b3672cef-94ad-4c74-9e78-44d72d8350c8" />
+      <Column Name="Soyadi" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="daa44682-fa37-427b-85db-72925218d5e0" />
+      <Column Name="Tc" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="d6ee24f1-100f-4b9d-a070-0791a47eb198" />
+      <Column Name="Telefon" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="5f80666a-dedf-4cca-9cb1-e37d1140e4f3" />
+      <Column Name="Adres" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="042b6d75-ef7a-497a-b8e1-dc464e05a433" />
+      <Column Name="Yas" Type="System.Int32" DbType="INT" CanBeNull="true" UpdateCheck="Always" Precision="10" ed:ValidateRequired="false" ed:Guid="cd8de15e-5e12-46c0-8747-58dbb3519193" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="10189aa9-a1ab-4859-a645-a4df64243e3e" />
+      <Column Name="Eposta" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="785afb12-7ff5-43b7-b079-f3fe475712e9" />
+      <Column Name="Resim" Type="System.Byte[]" DbType="IMAGE" CanBeNull="true" UpdateCheck="Never" MaxLength="1073741823" ed:ValidateRequired="false" ed:Guid="7b9a0311-e1c7-4a5a-b530-4fc61289e6c5" />
+      <Association Name="Musteriler_MusteriIadeler" ed:AssociationGuid="8715668d-5d44-447f-b037-e58ff8b2db8f" Member="MusteriIadeler" ed:Guid="117c6f29-eab8-453c-bb73-73600e07104e" ThisKey="MusteriID" OtherKey="MusteriID" Type="MusteriIadeler" />
+      <Association Name="Musteriler_Satislar" ed:AssociationGuid="f604e518-0ae1-40b7-8f82-2acabd72f96d" Member="Satislar" ed:Guid="2c9b69b2-4ca0-4753-a51a-da58bb038f95" ThisKey="MusteriID" OtherKey="MusteriID" Type="Satislar" />
+    </Type>
+  </Table>
+  <Table Name="Satislar" Member="Satislar">
+    <Type Name="Satislar" ed:Guid="512edfdc-9e7e-4c1d-99fd-f9b4bc3a4239">
+      <Column Name="SatisID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="5260a9d0-ae53-4d32-bd2b-7ace4a8fdc9b" />
+      <Column Name="MusteriID" Type="System.Int32" DbType="INT" CanBeNull="true" UpdateCheck="Always" Precision="10" ed:ValidateRequired="false" ed:Guid="823ab41c-c6ea-4c78-80eb-b3948cf96e34" />
+      <Column Name="UrunlerUrunID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="7d809870-f0b2-4216-8f84-95df4ed38139" />
+      <Column Name="Adet" Type="System.Single" DbType="REAL" CanBeNull="true" UpdateCheck="Always" Precision="24" ed:ValidateRequired="false" ed:Guid="de250223-9c68-4b21-90de-30875cb75413" />
+      <Column Name="TahsilatTarih" Type="System.DateTime" DbType="DATETIME" CanBeNull="true" UpdateCheck="Always" Precision="23" ed:ValidateRequired="false" ed:Guid="8eb2e87a-c4f1-4c9e-b999-9fb0b56aa42e" />
+      <Column Name="PesinMi" Type="System.Boolean" DbType="BIT" CanBeNull="true" UpdateCheck="Always" ed:ValidateRequired="false" ed:Guid="6081aa00-fcc1-432c-a99b-68d45bfa95c9" />
+      <Association Name="Satislar_MusteriIadeler" ed:AssociationGuid="c10af0f4-54ce-4545-8a01-6544721b045a" Member="MusteriIadeler" ed:Guid="939f02c1-f508-435f-b64f-5322f7841372" ThisKey="SatisID" OtherKey="SatisID" Type="MusteriIadeler" />
+      <Association Name="Musteriler_Satislar" ed:AssociationGuid="f604e518-0ae1-40b7-8f82-2acabd72f96d" Member="Musteriler" ed:Guid="a23f2ff4-b972-45d1-9e5d-6e60742a2b53" ThisKey="MusteriID" OtherKey="MusteriID" Type="Musteriler" DeleteRule="NO ACTION" IsForeignKey="true" />
+      <Association Name="Urunler_Satislar" ed:AssociationGuid="08e4e350-73fb-4706-ba74-8c683cf56b4f" Member="Urunler" ed:Guid="31840fcd-fadb-4a2d-9476-7c41d0ca8943" ThisKey="UrunlerUrunID" OtherKey="UrunID" Type="Urunler" DeleteRule="NO ACTION" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="Satislar_Tahsilatlar" ed:AssociationGuid="422fcaee-35c8-445e-a5f5-60d5e5ddc0b4" Member="Tahsilatlar" ed:Guid="79d4303a-5964-494c-b49a-cf8aa04aa8d1" ThisKey="SatisID" OtherKey="SatisID" Type="Tahsilatlar" />
+    </Type>
+  </Table>
+  <Table Name="Tahsilatlar" Member="Tahsilatlar">
+    <Type Name="Tahsilatlar" ed:Guid="8b318abc-ad4d-4b9b-a30d-d8341b77f6e5">
+      <Column Name="TahsilatID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="28edd66e-4777-44f0-8e3a-9c418ac30df5" />
+      <Column Name="ToplamTutar" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="5452a074-1a9e-4bf6-b58d-35f8d4b8fd36" />
+      <Column Name="PesinOdenen" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="0e1e509e-9bd5-4805-ba4c-afab96e6fad4" />
+      <Column Name="TaksitSayisi" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="3f5e6f2c-e6b7-4d2b-ba94-f7fd5a254f99" />
+      <Column Name="FaizOrani" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="c310c58d-710d-4401-adc5-2da6fa36e34c" />
+      <Column Name="TahsilatBittiMi" Type="System.Boolean" DbType="BIT" CanBeNull="true" UpdateCheck="Always" ed:ValidateRequired="false" ed:Guid="db03af77-fb71-4376-bc6b-460ffa414dac" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="5dd3159d-6c50-4667-9740-bca8885217b4" />
+      <Column Name="SatisID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="6939dbde-a8e8-42cf-90c4-b2efa2c6219c" />
+      <Association Name="Satislar_Tahsilatlar" ed:AssociationGuid="422fcaee-35c8-445e-a5f5-60d5e5ddc0b4" Member="Satislar" ed:Guid="d6d99c85-42cc-4da9-8da4-4095595cddea" ThisKey="SatisID" OtherKey="SatisID" Type="Satislar" DeleteRule="CASCADE" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="Tahsilatlar_Taksitler" ed:AssociationGuid="efee97e2-215a-424e-bbf2-7e264e94357b" Member="Taksitler" ed:Guid="4f57eb89-9947-4d7a-8f0f-0dde6eefbe5a" ThisKey="TahsilatID" OtherKey="TahsilatID" Type="Taksitler" />
+    </Type>
+  </Table>
+  <Table Name="Taksitler" Member="Taksitler">
+    <Type Name="Taksitler" ed:Guid="ceeb8f4d-468b-424d-85ba-a217a2d1a9f9">
+      <Column Name="TaksitID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="8e75b7c2-18aa-4e6d-b9f0-6acc854e0abd" />
+      <Column Name="VadeTarihi" Type="System.DateTime" DbType="DATETIME NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="23" ed:ValidateRequired="true" ed:Guid="1e393cdb-4acd-44fb-8b66-95ca0df35089" />
+      <Column Name="TaksitBedeli" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="12abde96-d883-4dde-bdb9-5e5531bc280c" />
+      <Column Name="TahsilEdilenTaksitTutari" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="00b2bd24-79bf-4421-8952-be61bcf7a3d6" />
+      <Column Name="TaksitOdendiMi" Type="System.Boolean" DbType="BIT" CanBeNull="true" UpdateCheck="Always" ed:ValidateRequired="false" ed:Guid="13554770-44cc-4c37-bb58-d4a0a5ac1945" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="2c5b854c-b824-45ed-a59e-8b93c3a94f26" />
+      <Column Name="TahsilatID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="abe45e9b-a743-4b96-8371-db73d153f6f2" />
+      <Column Name="Sira" Type="System.Int32" DbType="INT" CanBeNull="true" UpdateCheck="Always" Precision="10" ed:ValidateRequired="false" ed:Guid="589b0ec7-12eb-4632-85a9-2d9d6bc6c90c" />
+      <Association Name="Tahsilatlar_Taksitler" ed:AssociationGuid="efee97e2-215a-424e-bbf2-7e264e94357b" Member="Tahsilatlar" ed:Guid="3fe2ab16-fce3-4ad8-9356-680aba91f3aa" ThisKey="TahsilatID" OtherKey="TahsilatID" Type="Tahsilatlar" DeleteRule="CASCADE" DeleteOnNull="true" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Toptancilar" Member="Toptancilar">
+    <Type Name="Toptancilar" ed:Guid="02635fc0-916c-4045-bf0d-f1e98bdd8636">
+      <Column Name="ToptanciID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="37c1a426-68e2-422b-8b55-552110fa2b78" />
+      <Column Name="Adi" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="f717c2fc-93c1-4e7c-aa8c-af5beddd10b9" />
+      <Column Name="Telefon" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="0d9c2f1a-d459-413a-88dc-2e736562d988" />
+      <Column Name="Adres" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="06832366-a6a9-479a-94e6-2fe9d70223a0" />
+      <Column Name="VergiNo" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="373e5c7b-0015-4a3c-84d2-623a44ca0deb" />
+      <Column Name="MalAlimTarihi" Type="System.DateTime" DbType="DATETIME" CanBeNull="true" UpdateCheck="Always" Precision="23" ed:ValidateRequired="false" ed:Guid="292765c2-b108-4657-b396-56b57d603ef4" />
+      <Column Name="ToptanciyaOlanBorc" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="abe6cb04-a37b-4a54-a468-d39100f05524" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="3b05962f-80cf-4d60-93f4-14c0516ae604" />
+      <Association Name="Toptancilar_UrunGruplari" ed:AssociationGuid="1d3cfdfb-733c-4d9a-97c2-c95bcbd71d11" Member="UrunGruplari" ed:Guid="ff43f48d-b132-4c06-8001-5552e6d2cd9b" ThisKey="ToptanciID" OtherKey="ToptanciID" Type="UrunGruplari" />
+    </Type>
+  </Table>
+  <Table Name="UrunGruplari" Member="UrunGruplari">
+    <Type Name="UrunGruplari" ed:Guid="5ea546ad-5b3a-4082-b9a2-059fed5796e7">
+      <Column Name="UrunGrupID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="b87aa5ff-d593-4f8f-9273-72b474763a61" />
+      <Column Name="ToptanciID" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="a1286df9-d9f2-465c-88a1-46539e7f899d" />
+      <Column Name="KategoriId" Type="System.Int32" DbType="INT NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="c72a9673-1e85-43d7-8d2d-83221fb50007" />
+      <Association Name="Toptancilar_UrunGruplari" ed:AssociationGuid="1d3cfdfb-733c-4d9a-97c2-c95bcbd71d11" Member="Toptancilar" ed:Guid="7d93be00-647d-4761-a8b2-feb32342f4df" ThisKey="ToptanciID" OtherKey="ToptanciID" Type="Toptancilar" DeleteRule="NO ACTION" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="UrunKategorileri_UrunGruplari" ed:AssociationGuid="41781b52-ac45-4e38-8fac-0ec744a7c5ba" Member="UrunKategorileri" ed:Guid="0884f540-91b7-41dd-80a1-f71688938364" ThisKey="KategoriId" OtherKey="KategoriId" Type="UrunKategorileri" DeleteRule="NO ACTION" DeleteOnNull="true" IsForeignKey="true" />
+      <Association Name="UrunGruplari_Urunler" ed:AssociationGuid="f3d93b05-a83d-4c54-a1e4-e807cbaf6285" Member="Urunler" ed:Guid="73c9c807-7922-49d1-abeb-57c290eedfd6" ThisKey="UrunGrupID" OtherKey="UrunGrupID" Type="Urunler" />
+    </Type>
+  </Table>
+  <Table Name="UrunKategorileri" Member="UrunKategorileri">
+    <Type Name="UrunKategorileri" ed:Guid="d76cf92b-2b01-4309-a6a4-70e8a107cfa5">
+      <Column Name="KategoriId" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="434ccf0a-7e39-42e2-92ac-5b23838691b2" />
+      <Column Name="KategoriAdi" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="ab15be61-bd1d-4f4c-96f6-0c25a1a0473c" />
+      <Association Name="UrunKategorileri_UrunGruplari" ed:AssociationGuid="41781b52-ac45-4e38-8fac-0ec744a7c5ba" Member="UrunGruplari" ed:Guid="0400d0db-e884-46c7-b1cc-2d4941719e3d" ThisKey="KategoriId" OtherKey="KategoriId" Type="UrunGruplari" />
+    </Type>
+  </Table>
+  <Table Name="Urunler" Member="Urunler">
+    <Type Name="Urunler" ed:Guid="837e8b95-290c-4066-aeea-04c629e48c00">
+      <Column Name="UrunID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="f4b8dc4f-ecbc-4173-92eb-b8b5c21702a4" />
+      <Column Name="UrunAdi" Type="System.String" DbType="NVARCHAR(4000) NOT NULL" CanBeNull="false" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="true" ed:Guid="c6e9a3a7-7110-464f-a1ca-1471afe82284" />
+      <Column Name="AlisFiyat" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="2fa0c639-6022-4abd-ab18-4b8544ad95da" />
+      <Column Name="SatisFiyat" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="4f091460-d5aa-448e-b230-0b2bad6981d6" />
+      <Column Name="Kdv" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="9b9cb963-e81f-410b-af93-2d05806fe912" />
+      <Column Name="KalanMiktar" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="96e1027c-d67e-4cc7-bf3e-5b826df7fb39" />
+      <Column Name="OlcuBirimi" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="24e21c52-a0e4-4c82-a6b2-f1dfd31a8025" />
+      <Column Name="Aciklama" Type="System.String" DbType="NVARCHAR(4000)" CanBeNull="true" UpdateCheck="Always" MaxLength="4000" Unicode="true" ed:ValidateMaxLength="4000" ed:ValidateRequired="false" ed:Guid="b1a71419-945f-4fda-a697-f29dbfa57b2a" />
+      <Column Name="UrunGrupID" Type="System.Int32" DbType="INT" CanBeNull="true" UpdateCheck="Always" Precision="10" ed:ValidateRequired="false" ed:Guid="5cd7b317-3ee9-4cbe-824b-87b87895d8fd" />
+      <Column Name="ToplamMiktar" Type="System.Single" DbType="REAL NOT NULL" CanBeNull="false" UpdateCheck="Always" Precision="24" ed:ValidateRequired="true" ed:Guid="623c20c5-8b34-4052-9871-03c3ab0f0be8" />
+      <Column Name="Resim" Type="System.Byte[]" DbType="IMAGE" CanBeNull="true" UpdateCheck="Never" MaxLength="1073741823" ed:ValidateRequired="false" ed:Guid="4990587e-e5e9-4010-935f-7167d1d861b5" />
+      <Column Name="Favori" Type="System.Boolean" DbType="BIT" CanBeNull="true" UpdateCheck="Always" ed:ValidateRequired="false" ed:Guid="94da51c0-3c24-4a13-91f5-7025f7acbe04" />
+      <Association Name="Urunler_MusteriIadeler" ed:AssociationGuid="6df1758b-7b96-41b6-b31c-a37eed1b6723" Member="MusteriIadeler" ed:Guid="b4b311ef-1b04-489c-9d17-c4759ba8a16f" ThisKey="UrunID" OtherKey="UrunID" Type="MusteriIadeler" />
+      <Association Name="Urunler_Satislar" ed:AssociationGuid="08e4e350-73fb-4706-ba74-8c683cf56b4f" Member="Satislar" ed:Guid="6304c861-b24e-4c88-9717-03747f674c6d" ThisKey="UrunID" OtherKey="UrunlerUrunID" Type="Satislar" />
+      <Association Name="UrunGruplari_Urunler" ed:AssociationGuid="f3d93b05-a83d-4c54-a1e4-e807cbaf6285" Member="UrunGruplari" ed:Guid="2f7c397e-735c-4b88-b103-5296998a81c0" ThisKey="UrunGrupID" OtherKey="UrunGrupID" Type="UrunGruplari" DeleteRule="NO ACTION" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Ayarlar" Member="Ayarlar">
+    <Type Name="Ayarlar" ed:Guid="358e1c26-9d9e-4605-8822-db884b298023">
+      <Column Name="AyarID" Type="System.Int32" AutoSync="OnInsert" DbType="INT NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="true" ed:Guid="80335f93-8826-4331-80d2-73e398d8af89" />
+      <Column Name="SatisYapilabilirMi" Type="System.Boolean" DbType="BIT" CanBeNull="true" UpdateCheck="Always" ed:ValidateRequired="false" ed:Guid="69b38a2d-adf6-4d1a-b891-b817308448d5" />
+    </Type>
+  </Table>
+</Database>
